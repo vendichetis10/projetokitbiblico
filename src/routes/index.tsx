@@ -1,24 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
+import { createFileRoute, redirect } from '@tanstack/react-router';
+export const Route = createFileRoute('/')({
+ beforeLoad:()=>{throw redirect({to:'/kit-biblico'});},
+ head:()=>({meta:[{title:'Kit Bíblico Infantil — Actividades bíblicas en familia'},{name:'description',content:'Alfabeto Bíblico y cinco bonos en PDF en español para compartir en familia.'},{property:'og:title',content:'Kit Bíblico Infantil'},{property:'og:description',content:'Actividades bíblicas para descargar e imprimir.'},{property:'og:type',content:'website'},{name:'twitter:card',content:'summary_large_image'}]})
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}

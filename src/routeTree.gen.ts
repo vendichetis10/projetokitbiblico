@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KitBiblicoRouteImport } from './routes/kit-biblico'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KitBiblicoRoute = KitBiblicoRouteImport.update({
+  id: '/kit-biblico',
+  path: '/kit-biblico',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/kit-biblico': typeof KitBiblicoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/kit-biblico': typeof KitBiblicoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/kit-biblico': typeof KitBiblicoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/kit-biblico'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/kit-biblico'
+  id: '__root__' | '/' | '/kit-biblico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KitBiblicoRoute: typeof KitBiblicoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kit-biblico': {
+      id: '/kit-biblico'
+      path: '/kit-biblico'
+      fullPath: '/kit-biblico'
+      preLoaderRoute: typeof KitBiblicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KitBiblicoRoute: KitBiblicoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

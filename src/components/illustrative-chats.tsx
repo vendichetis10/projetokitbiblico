@@ -1,34 +1,27 @@
 import { useRef, useState } from 'react';
-import { CheckCheck, MessageCircle } from 'lucide-react';
+import anaCarmen from '@/assets/testimonio-ana-carmen.avif.asset.json';
+import luciaFernandez from '@/assets/testimonio-lucia-fernandez.avif.asset.json';
+import martaRodriguez from '@/assets/testimonio-marta-rodriguez.avif.asset.json';
 
-const conversations = [
+const testimonials = [
   {
-    name: 'Lucía Martín', initials: 'LM',
-    messages: [
-      '¡Hola! Busco algo para compartir un ratito sin pantallas con mi peque 😊',
-      'Puedes elegir una letra del alfabeto, imprimirla y preparar los colores.',
-      '¡Ese plan me gusta! Colorear y conversar sobre la Biblia juntos 💛',
-    ],
+    name: 'Ana Carmen',
+    image: anaCarmen,
+    alt: 'Captura de WhatsApp de Ana Carmen: descargó el Alfabeto Bíblico, imprimió las actividades y coloreó con su hijo mientras hablaban de historias de la Biblia.',
   },
   {
-    name: 'Carmen López', initials: 'CL',
-    messages: [
-      '¿El bingo también viene en el kit?',
-      'Sí, incluye el Bingo Bíblico en Familia y los otros cuatro bonos, además del alfabeto.',
-      '¡Qué buena idea para una tarde en familia! 😊',
-    ],
+    name: 'Lucía Fernández',
+    image: luciaFernandez,
+    alt: 'Captura de WhatsApp de Lucía Fernández: abrió el PDF, imprimió hojas para hacer con su hija y aprovechó para repasar las letras y los personajes de la Biblia.',
   },
   {
-    name: 'Álvaro García', initials: 'AG',
-    messages: [
-      'Hola 👋 ¿Son archivos para imprimir en casa?',
-      'Sí, son PDFs en español. También puedes llevarlos a un servicio de impresión.',
-      'Perfecto, así podemos elegir una actividad para compartir con los niños 🙌',
-    ],
+    name: 'Marta Rodríguez',
+    image: martaRodriguez,
+    alt: 'Captura de WhatsApp de Marta Rodríguez: jugó con su familia al bingo bíblico y al dominó de personajes, y las letras y juegos fueron variados y divertidos.',
   },
 ];
 
-export function IllustrativeChats() {
+export function TestimonialChats() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
@@ -59,24 +52,12 @@ export function IllustrativeChats() {
       <p>testimonios de clientes.</p>
     </div>
     <div className="chat-grid" ref={trackRef} onScroll={handleScroll}>
-      {conversations.map(chat => <article className="chat-card" key={chat.name} aria-label={`Conversación ficticia con ${chat.name}`}>
-        <header className="chat-header">
-          <span className="chat-avatar" aria-hidden="true">{chat.initials}</span>
-          <div><h3>{chat.name}</h3><p>Personaje ficticio</p></div>
-          <MessageCircle size={21} aria-hidden="true" />
-        </header>
-        <div className="chat-messages">
-          <span className="chat-example">Ejemplo ilustrativo</span>
-          {chat.messages.map((message, index) => <div className={`chat-bubble ${index === 1 ? 'chat-reply' : ''}`} key={message}>
-            <p>{message}</p>
-            {index === 1 && <CheckCheck className="chat-check" size={15} aria-hidden="true" />}
-          </div>)}
-        </div>
-        <p className="chat-disclaimer">Conversación ficticia · No es una reseña real.</p>
+      {testimonials.map(testimonial => <article className="chat-card testimonial-card" key={testimonial.name} aria-label={`Testimonio de ${testimonial.name}`}>
+        <img src={testimonial.image.url} alt={testimonial.alt} loading="lazy" width="330" height="560"/>
       </article>)}
     </div>
     <div className="chat-dots" role="tablist" aria-label="Seleccionar testimonio">
-      {conversations.map((chat, index) => <button key={chat.name} type="button" role="tab" aria-selected={active === index} aria-label={`Ver testimonio de ${chat.name}`} className={`chat-dot ${active === index ? 'active' : ''}`} onClick={() => goTo(index)} />)}
+      {testimonials.map((testimonial, index) => <button key={testimonial.name} type="button" role="tab" aria-selected={active === index} aria-label={`Ver testimonio de ${testimonial.name}`} className={`chat-dot ${active === index ? 'active' : ''}`} onClick={() => goTo(index)} />)}
     </div>
   </div>;
 }

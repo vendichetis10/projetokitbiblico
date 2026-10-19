@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { CheckCheck, MessageCircle } from 'lucide-react';
 
 const conversations = [
@@ -28,12 +29,36 @@ const conversations = [
 ];
 
 export function IllustrativeChats() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const handleScroll = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const center = track.scrollLeft + track.clientWidth / 2;
+    let best = 0;
+    let bestDistance = Infinity;
+    Array.from(track.children).forEach((card, index) => {
+      const element = card as HTMLElement;
+      const distance = Math.abs(element.offsetLeft + element.offsetWidth / 2 - center);
+      if (distance < bestDistance) { bestDistance = distance; best = index; }
+    });
+    setActive(best);
+  };
+
+  const goTo = (index: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.children[index] as HTMLElement | undefined;
+    if (card) track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+  };
+
   return <div className="illustrative-chats">
     <div className="section-heading">
       <h2>Un plan para compartir en familia.</h2>
       <p>testimonios de clientes.</p>
     </div>
-    <div className="chat-grid">
+    <div className="chat-grid" ref={trackRef} onScroll={handleScroll}>
       {conversations.map(chat => <article className="chat-card" key={chat.name} aria-label={`Conversación ficticia con ${chat.name}`}>
         <header className="chat-header">
           <span className="chat-avatar" aria-hidden="true">{chat.initials}</span>
@@ -49,6 +74,9 @@ export function IllustrativeChats() {
         </div>
         <p className="chat-disclaimer">Conversación ficticia · No es una reseña real.</p>
       </article>)}
+    </div>
+    <div className="chat-dots" role="tablist" aria-label="Seleccionar testimonio">
+      {conversations.map((chat, index) => <button key={chat.name} type="button" role="tab" aria-selected={active === index} aria-label={`Ver testimonio de ${chat.name}`} className={`chat-dot ${active === index ? 'active' : ''}`} onClick={() => goTo(index)} />)}
     </div>
   </div>;
 }

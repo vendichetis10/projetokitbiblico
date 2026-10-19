@@ -13,3 +13,4 @@
 - The Spanish kit sales page lives at `/kit-biblico`; `/` redirects there because the requested page has an explicit URL and this project had no original sales page.
 - Keep the kit presentation in `src/components/kit-page.tsx` and its semantic design system in `src/styles.css` so all sections share consistent styling.
 - Import product media from Lovable Assets pointer JSON files; use only the authentic source-site materials to avoid misrepresenting the PDFs.
+- Keep illustrative conversations in a separate presentation component within the benefits section to preserve the seven-section page structure.

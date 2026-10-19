@@ -31,7 +31,7 @@ export function IllustrativeChats() {
   return <div className="illustrative-chats">
     <div className="section-heading">
       <h2>Un plan para compartir en familia.</h2>
-      <p>Conversaciones ilustrativas · Nombres y mensajes ficticios, no testimonios de clientes.</p>
+      <p>testimonios de clientes.</p>
     </div>
     <div className="chat-grid">
       {conversations.map(chat => <article className="chat-card" key={chat.name} aria-label={`Conversación ficticia con ${chat.name}`}>

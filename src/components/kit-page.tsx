@@ -39,7 +39,16 @@ const LOCALES: Record<Market['language'],LocaleText> = {
  pt:{headlineStart:'Menos telas!',headlineEmphasis:'Mais momentos especiais com Deus',headlineEnd:'em família.',intro:'Transforme uma tarde comum em momentos de fé, aprendizado e diversão. São 3 livros ilustrados e 5 jogos bíblicos para imprimir e aproveitar em família. Os PDFs estão principalmente em espanhol.',mainBooks:'3 livros ilustrados',bonusGames:'5 jogos incluídos',digitalDownload:'Download digital',priceTop:'KIT COMPLETO POR APENAS',location:'Seu país',select:'Selecione seu país',estimate:'Preço estimado na sua moeda',checkout:'Ver preço final e pagar',original:'Preço base',buy:'QUERO MEU KIT COMPLETO!',short:'Pagamento único · PDF digital',only:'Kit completo por apenas',currencyDisclaimer:'Conversão apenas informativa. A Kiwify confirma o valor e a moeda finais antes do pagamento. Os PDFs estão principalmente em espanhol.'},
  en:{headlineStart:'Less screen time!',headlineEmphasis:'More special moments with God',headlineEnd:'as a family.',intro:'Turn an ordinary afternoon into faith-filled fun and learning. Get 3 illustrated books and 5 printable Bible games to enjoy together. PDFs are primarily in Spanish.',mainBooks:'3 illustrated books',bonusGames:'5 bonus games',digitalDownload:'Digital download',priceTop:'THE COMPLETE KIT FOR',location:'Your country',select:'Select your country',estimate:'Estimated price in your currency',checkout:'See final checkout price',original:'Base price',buy:'GET MY COMPLETE KIT!',short:'One-time payment · Digital PDFs',only:'Complete kit for',currencyDisclaimer:'Estimated conversion only. Kiwify confirms the final amount and currency before payment. PDFs are primarily in Spanish.'},
 };
-function formatMoney(value:number, market:Market) {try{return new Intl.NumberFormat(market.locale,{style:'currency',currency:market.currency,maximumFractionDigits:['CLP','COP','PYG','CRC'].includes(market.currency)?0:2}).format(value);}catch{return 'US$ '+value.toFixed(2);}}
+function formatMoney(value:number, market:Market) {
+ // Show unambiguous ISO currency codes in every market, with no fractional
+ // units for high-denomination currencies (including ARS).
+ const zeroDecimals=['ARS','CLP','COP','PYG','CRC','UYU'];
+ const digits=zeroDecimals.includes(market.currency)?0:2;
+ try {
+  const amount=new Intl.NumberFormat(market.locale,{minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
+  return market.currency+' '+amount;
+ }catch{return market.currency+' '+value.toFixed(digits);}
+}
 function useLocalPricing() {
  const [market,setMarket] = useState<Market>(DEFAULT_MARKET);
  const [rate,setRate] = useState<number|null>(null);
@@ -79,7 +88,7 @@ function useLocalPricing() {
  },[market.currency]);
  const choose=(code:string)=>{const next=MARKETS.find(m=>m.country===code);if(next){setMarket(next);window.sessionStorage.setItem('kit-market-manual',code);}};
  const locale=LOCALES[market.language];
- const price=(usd:number)=>market.currency==='USD'?'US$ '+usd.toFixed(2):rate?formatMoney(usd*rate,market):'US$ '+usd.toFixed(2);
+ const price=(usd:number)=>market.currency==='USD'?'USD '+usd.toFixed(2):rate?formatMoney(usd*rate,market):'US$ '+usd.toFixed(2);
  const converted=market.currency==='USD'||rate!==null;
  return {market,choose,locale,price,converted};
 }

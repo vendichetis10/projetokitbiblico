@@ -329,3 +329,15 @@ html{scroll-behavior:smooth}
 .hero-price strong{overflow-wrap:anywhere}
 .stack-value strong{font-size:clamp(18px,2vw,24px);overflow-wrap:anywhere;white-space:normal;text-align:right}
 @media(max-width:767px){.header-inner{flex-wrap:wrap;min-height:64px;height:auto;padding-block:9px;gap:5px}.brand{font-size:17px}.market-switcher{margin-left:auto}.market-switcher label{display:none}.market-switcher select{font-size:11px;max-width:150px;padding:6px}.hero-price strong{font-size:clamp(30px,8vw,41px)}.stack-discount .localized-price strong{font-size:clamp(30px,9vw,49px)}.final-price.localized-price strong{font-size:clamp(28px,9vw,48px)}.currency-disclaimer{font-size:10px!important}}
+
+/* Steps section - value reinforcement without extra checkout friction */
+.steps-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+.steps-grid .item-card{min-height:214px;display:flex;flex-direction:column;align-items:flex-start}
+.steps-assurance{margin-top:22px;display:flex;align-items:center;gap:17px;padding:22px 26px;border:1px solid #cfe8d8;border-radius:18px;background:linear-gradient(110deg,#f0fff3,#f7fbff);box-shadow:0 7px 20px #1f60400d}
+.steps-assurance-icon{display:grid;place-items:center;flex:0 0 52px;height:52px;border-radius:16px;background:#d9f8e8;color:#178456}
+.steps-assurance>div:nth-child(2){flex:1;min-width:0}
+.steps-assurance strong{display:block;color:#103e59;font-size:19px;font-weight:900}
+.steps-assurance p{color:#53697b;font-size:13px;line-height:1.55;margin-top:4px;max-width:640px}
+.steps-assurance-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end;max-width:220px}
+.steps-assurance-tags span{display:flex;align-items:center;gap:4px;border-radius:100px;background:#fff;color:#166d4b;padding:7px 9px;font-size:11px;font-weight:800;white-space:nowrap}
+@media(max-width:767px){.steps-grid{grid-template-columns:1fr;gap:12px}.steps-grid .item-card{min-height:auto}.steps-assurance{padding:18px;gap:12px;align-items:flex-start;flex-wrap:wrap}.steps-assurance-icon{flex-basis:42px;height:42px;border-radius:12px}.steps-assurance strong{font-size:16px}.steps-assurance p{font-size:12px}.steps-assurance-tags{max-width:none;width:100%;justify-content:flex-start;margin-top:4px}}

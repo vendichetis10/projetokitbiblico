@@ -192,3 +192,29 @@ p { line-height: 1.7; }
 .trust-explainer p{font-size:14px;color:var(--muted-foreground)}
 .trust-icon{padding:16px;border-radius:14px;background:#fff;color:var(--primary);flex-shrink:0}
 @media(max-width:767px){.stack-grid{grid-template-columns:1fr;gap:16px}.stack-cover{min-height:270px}.stack-cover img{height:250px}.stack-info{min-height:auto}.stack-total{gap:8px}.stack-total>div{padding:12px 7px}.stack-total span{font-size:11px}.stack-total strong{font-size:20px}.stack-plus{font-size:22px!important}.stack-discount{padding:24px 16px}.stack-discount strong{font-size:50px}.trust-explainer{align-items:flex-start;gap:12px;padding:18px}.trust-icon{padding:10px}}
+
+
+/* Oferta premium – mobile first */
+.stack-discount{position:relative;isolation:isolate;overflow:hidden;max-width:860px;padding:38px 34px 32px;border:2px solid #0b8a59;border-radius:30px;background:radial-gradient(circle at 5% 0%,#e8fff1 0%,transparent 35%),radial-gradient(circle at 100% 100%,#fff2c4 0%,transparent 37%),#fff;box-shadow:0 24px 60px rgba(14,72,62,.16),0 6px 20px rgba(14,72,62,.07);gap:15px}
+.stack-discount::before{content:"";position:absolute;inset:8px;border:1px dashed rgba(13,132,83,.20);border-radius:23px;pointer-events:none;z-index:-1}
+.premium-spark{position:absolute;right:5%;top:13px;font-size:44px;color:#f7b731;opacity:.65}
+.premium-offer-label{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#075c43;color:#fff;padding:9px 20px;font-size:12px;font-weight:900;letter-spacing:.10em}
+.stack-discount h3{max-width:670px;color:#103a65;font-family:'Baloo 2',sans-serif;font-size:clamp(28px,3.5vw,42px);line-height:1.1;font-weight:900}
+.premium-kit-summary{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.premium-kit-summary span{display:flex;align-items:center;gap:6px;background:#e9f8ef;border:1px solid #c7ead4;border-radius:100px;padding:8px 13px;color:#075c43;font-size:13px;font-weight:800}
+.premium-price-area{margin:4px auto 0;width:min(100%,520px);padding:20px 26px 18px;background:linear-gradient(160deg,#076746,#07865a);color:#fff;border-radius:22px;box-shadow:0 12px 30px rgba(7,116,75,.2);display:flex;flex-direction:column;align-items:center;gap:5px}
+.premium-reference{font-size:13px;font-weight:500;color:#e3f9eb}
+.premium-reference b{font-size:17px;color:#fff}
+.premium-today{font-size:15px;font-weight:800;color:#fff5c9}
+.premium-price{display:flex;align-items:baseline;justify-content:center;gap:10px}
+.premium-price span{font-family:'Baloo 2',sans-serif;font-size:31px;font-weight:900;color:#fff}
+.stack-discount .premium-price strong{font-size:clamp(72px,11vw,102px);line-height:.95;letter-spacing:-.045em;color:#fff}
+.premium-once{font-size:11px;font-weight:900;letter-spacing:.10em;color:#ffe181}
+.premium-purchase{width:min(100%,540px)}
+.stack-discount .premium-buy{width:100%;min-height:65px;padding:15px 22px;border-radius:100px;background:linear-gradient(180deg,#ffe66b 0%,#ffc122 100%);color:#073d30;font-weight:950;font-size:clamp(14px,2vw,18px);box-shadow:0 7px 0 #e4a10e,0 14px 24px rgba(194,137,12,.20);white-space:normal;line-height:1.2;transition:transform .2s,box-shadow .2s}
+.stack-discount .premium-buy:hover{transform:translateY(-2px);box-shadow:0 9px 0 #e4a10e,0 17px 26px rgba(194,137,12,.23)}
+.premium-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 17px;color:#36624d;font-size:12px;font-weight:800}
+.premium-trust span{display:flex;align-items:center;gap:4px}
+.stack-discount small{max-width:650px;font-size:11px;line-height:1.5;color:#6b7885;font-weight:400}
+@media(max-width:767px){.stack-discount{padding:29px 16px 25px;border-radius:23px;gap:14px}.stack-discount::before{inset:6px;border-radius:18px}.stack-discount h3{font-size:29px}.premium-offer-label{font-size:10px}.premium-kit-summary{gap:6px}.premium-kit-summary span{font-size:11px;padding:6px 9px}.premium-price-area{padding:18px 10px}.premium-reference{font-size:11px}.premium-reference b{font-size:14px}.premium-today{font-size:13px}.premium-price span{font-size:24px}.stack-discount .premium-price strong{font-size:76px}.premium-trust{font-size:10px;gap:6px 10px}.stack-discount .premium-buy{min-height:62px;padding:14px 10px}}
+@media(prefers-reduced-motion:reduce){.stack-discount .premium-buy{transition:none}}

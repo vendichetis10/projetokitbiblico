@@ -88,7 +88,7 @@ function useLocalPricing() {
  },[market.currency]);
  const choose=(code:string)=>{const next=MARKETS.find(m=>m.country===code);if(next){setMarket(next);window.sessionStorage.setItem('kit-market-manual',code);}};
  const locale=LOCALES[market.language];
- const price=(usd:number)=>market.currency==='USD'?'USD '+usd.toFixed(2):rate?formatMoney(usd*rate,market):'US$ '+usd.toFixed(2);
+ const price=(usd:number)=>market.currency==='USD'?'USD '+usd.toFixed(2):rate?formatMoney(usd*rate,market):'USD '+usd.toFixed(2);
  const converted=market.currency==='USD'||rate!==null;
  return {market,choose,locale,price,converted};
 }

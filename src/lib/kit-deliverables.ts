@@ -10,7 +10,7 @@ import aventuras from '@/assets/aventuras.jpg.asset.json';
 export const books = [
   { name: 'ALFABETO BÍBLICO', pages: 30, image: alphabet, text: '26 letras de la A a la Z con personajes y palabras de la Biblia, dibujos para colorear, reconocimiento de letras y ejercicios de trazado.' },
   { name: 'APRENDIENDO A ORAR', pages: 21, image: prayer, text: 'El Padre Nuestro, tipos de oración, pedidos y agradecimientos, dibujos para colorear, sopas de letras, crucigramas y actividades de reflexión.' },
-  { name: 'EL AMOR DE DIOS', pages: 18, image: love, text: 'Actividades sobre amor, perdón, gratitud y amistad: elegir actitudes, colorear, completar frases, relacionar ideas y resolver pasatiempos. Incluye algunos textos en portugués.' },
+  { name: 'EL AMOR DE DIOS', pages: 18, image: love, text: 'Actividades sobre amor, perdón, gratitud y amistad: elegir actitudes, colorear, completar frases, relacionar ideas y resolver pasatiempos.' },
 ] as const;
 
 export const bonuses = [

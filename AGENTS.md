@@ -12,5 +12,6 @@
 ## Application architecture
 - The Spanish kit sales page lives at `/kit-biblico`; `/` redirects there because the requested page has an explicit URL and this project had no original sales page.
 - Keep the kit presentation in `src/components/kit-page.tsx` and its semantic design system in `src/styles.css` so all sections share consistent styling.
-- Import product media from Lovable Assets pointer JSON files; use only the authentic source-site materials to avoid misrepresenting the PDFs.
+- Import product media from Lovable Assets pointer JSON files; use authentic source materials or owner-provided PDF extracts to avoid misrepresenting the deliverables.
+- Keep the verified book inventory and confirmed bonus inventory in src/lib/kit-deliverables.ts so the content grid and offer checklist stay consistent.
 - Keep illustrative conversations in a separate presentation component within the benefits section to preserve the seven-section page structure.

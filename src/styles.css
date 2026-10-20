@@ -243,3 +243,35 @@ p { line-height: 1.7; }
 .final-fine{font-size:10px;line-height:1.6;color:#718075;margin-top:14px}.final-value-note{font-size:10px;color:#7b858d;line-height:1.6;text-align:center;margin:24px 0 0}
 @media(max-width:767px){.final-offer{padding:45px 0}.final-offer-panel{padding:26px 17px;border-radius:24px}.final-offer-badge{font-size:9px;padding:8px 10px}.final-offer-top{margin-bottom:22px}.final-offer-top h2{font-size:30px}.final-offer-top>p{font-size:14px}.final-offer-grid{grid-template-columns:1fr;gap:24px}.final-offer-visual .offer-image{max-width:340px}.final-inventory{max-width:400px;margin:20px auto 0}.final-offer-checkout{padding:24px 18px}.final-price strong{font-size:83px}.final-offer .final-buy{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.final-offer .final-buy{transition:none}}
+
+/* Conversion refinement: clearer above-the-fold message and tangible use cases */
+html{scroll-behavior:smooth}
+.hero{background:radial-gradient(circle at 88% 15%,#fff4c8 0,transparent 32%),linear-gradient(135deg,#e9f9ff 0%,#f4fff6 52%,#fffbee 100%);padding:65px 0 76px}
+.hero-grid{grid-template-columns:minmax(0,1.01fr) minmax(0,.99fr);gap:38px}
+.hero h1{font-size:clamp(42px,4.7vw,64px);line-height:1.06;letter-spacing:-.035em;max-width:720px}
+.hero-lead{font-size:18px;line-height:1.62;max-width:590px;color:#365269}
+.hero-kicker{display:inline-flex;align-items:center;gap:9px;border-radius:100px;padding:9px 15px;background:#fff0b4;color:#795316;font-size:11px;font-weight:900;letter-spacing:.055em;margin-bottom:20px}
+.hero-proof{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0 18px}
+.hero-proof span{display:flex;gap:6px;align-items:center;background:#fff;border:1px solid #d4eadc;color:#165b43;border-radius:100px;padding:8px 11px;font-size:12px;font-weight:800}
+.hero-price{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+.hero-price>span{color:#456c59;font-size:11px;font-weight:900;letter-spacing:.08em}
+.hero-price strong{font-family:'Baloo 2',sans-serif;font-size:clamp(37px,4.2vw,56px);line-height:1.12;color:#007c51}
+.hero-price small{font-size:12px;color:#456c59;font-weight:700}
+.hero .purchase{margin-top:17px}
+.hero .cta{background:linear-gradient(180deg,#ffeb78,#ffc72c);color:#103d32;box-shadow:0 6px 0 #d79c16,0 15px 25px #d79c1630;min-height:59px}
+.hero-visual{background:radial-gradient(ellipse at center,#fff 0%,#ffffff00 72%);min-width:0}
+.hero-visual .product-image{filter:drop-shadow(0 19px 28px #184d3b25)}
+.quick-benefits{background:#0b5744;color:#fff;padding:24px 0}
+.quick-benefits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:23px}
+.quick-benefits-grid>div{display:grid;grid-template-columns:35px 1fr;gap:0 10px;align-items:center}
+.quick-benefits-grid svg{grid-row:span 2;color:#ffdc66;width:27px;height:27px}
+.quick-benefits-grid strong{font-size:14px}
+.quick-benefits-grid span{color:#d4eee1;font-size:12px;line-height:1.45}
+.routine-section{background:#fffdf6}
+.routine-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.routine-grid article{border:1px solid #e7e6d5;background:#fff;border-radius:20px;padding:25px;box-shadow:0 12px 30px #25412b0d}
+.routine-grid article span{display:inline-flex;background:#fff1b9;color:#765012;padding:7px 12px;border-radius:99px;font-weight:900;font-size:12px;margin-bottom:12px}
+.routine-grid h3{color:#133f5b;font-size:23px}
+.routine-grid p{font-size:14px;color:#577069;margin-top:10px}
+.cta:focus-visible,.sample-button:focus-visible{outline:3px solid #eeaf0c;outline-offset:4px}
+@media(max-width:767px){.hero{padding:31px 0 46px}.hero h1{font-size:clamp(34px,9vw,43px)}.hero-kicker{font-size:9px;justify-content:center;margin-bottom:15px}.hero-proof{justify-content:center;gap:6px}.hero-proof span{font-size:10px;padding:7px 9px}.hero-price{align-items:center}.hero-lead{font-size:15px}.hero-visual{grid-row:2}.quick-benefits-grid{grid-template-columns:1fr;gap:17px}.quick-benefits{padding:22px 0}.routine-grid{grid-template-columns:1fr;gap:12px}.routine-grid article{padding:20px}.hero .cta{width:100%}}

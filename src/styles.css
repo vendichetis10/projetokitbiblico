@@ -341,3 +341,21 @@ html{scroll-behavior:smooth}
 .steps-assurance-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end;max-width:220px}
 .steps-assurance-tags span{display:flex;align-items:center;gap:4px;border-radius:100px;background:#fff;color:#166d4b;padding:7px 9px;font-size:11px;font-weight:800;white-space:nowrap}
 @media(max-width:767px){.steps-grid{grid-template-columns:1fr;gap:12px}.steps-grid .item-card{min-height:auto}.steps-assurance{padding:18px;gap:12px;align-items:flex-start;flex-wrap:wrap}.steps-assurance-icon{flex-basis:42px;height:42px;border-radius:12px}.steps-assurance strong{font-size:16px}.steps-assurance p{font-size:12px}.steps-assurance-tags{max-width:none;width:100%;justify-content:flex-start;margin-top:4px}}
+
+/* Customer experiences: compact, swipeable mobile social proof */
+.testimonials-section{background:linear-gradient(180deg,#fffaf0 0%,#f4fff7 100%)}
+.testimonials-section .section-heading{max-width:830px}
+.testimonials-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.testimonial-card{background:#fff;border:1px solid #daeadf;border-radius:20px;box-shadow:0 12px 30px #194f4220;padding:23px;display:flex;flex-direction:column;min-width:0}
+.testimonial-top{display:flex;align-items:center;gap:11px;padding-bottom:18px;border-bottom:1px solid #eaf1ed}
+.testimonial-initial{height:42px;width:42px;display:grid;place-items:center;flex-shrink:0;border-radius:50%;background:#075a47;color:white;font-size:12px;font-weight:900}
+.testimonial-top>div{display:flex;flex-direction:column;gap:2px;flex:1}
+.testimonial-top strong{font-size:14px;color:#113b3f}.testimonial-top small{font-size:10px;color:#637c7a}
+.testimonial-top svg{color:#eaa459}
+.testimonial-card blockquote{font-size:15px;line-height:1.76;color:#22484b;font-style:normal;font-weight:700;margin:19px 0 14px;flex:1}
+.testimonial-context{color:#527a65;font-size:11px;font-weight:800;margin-top:auto}
+.testimonials-bottom{text-align:center;margin:22px auto 0;max-width:670px}
+.testimonials-bottom>p{font-size:11px;line-height:1.6;color:#6a7d75;margin-bottom:15px}
+.testimonials-bottom h3{font-size:24px;color:#174b55;margin-bottom:16px;font-weight:900}
+.testimonials-bottom .purchase{display:flex;justify-content:center}
+@media(max-width:767px){.testimonials-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:18px;margin-inline:-18px;padding:8px 18px 21px;gap:13px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.testimonials-track::-webkit-scrollbar{display:none}.testimonial-card{flex:0 0 min(86vw,340px);scroll-snap-align:center;padding:18px}.testimonial-card blockquote{font-size:13px}.testimonials-bottom h3{font-size:20px}}

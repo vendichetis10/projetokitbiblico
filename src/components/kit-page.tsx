@@ -45,14 +45,29 @@ function useLocalPricing() {
  const [rate,setRate] = useState<number|null>(null);
  useEffect(()=>{
   let active=true;
-  const stored=window.localStorage.getItem('kit-market');
-  const storedMarket=MARKETS.find(m=>m.country===stored);
+  // Manual selection is only retained for this tab session; old persistent choices
+  // must not override a visitor's actual country on subsequent visits.
+  const manual=window.sessionStorage.getItem('kit-market-manual');
+  const selected=MARKETS.find(m=>m.country===manual);
+  if(selected){setMarket(selected);return()=>{active=false};}
+  window.localStorage.removeItem('kit-market');
   const browserLang=navigator.language?.toLowerCase()||'';
   const inferred=MARKETS.find(m=>browserLang.endsWith('-'+m.country.toLowerCase()));
-  if(storedMarket)setMarket(storedMarket);
-  else if(inferred)setMarket(inferred);
-  // Public IP-based lookup; failure retains the browser/selected-country fallback.
-  if(!storedMarket) fetch('https://ipwho.is/',{signal:AbortSignal.timeout(3500)}).then(r=>r.ok?r.json():null).then(data=>{const m=MARKETS.find(x=>x.country===data?.country_code);if(active&&m)setMarket(m);}).catch(()=>{});
+  if(inferred)setMarket(inferred);
+  const detect=async()=>{
+   // Independent public geo services; avoid dependence on a single provider.
+   for(const url of ['https://ipwho.is/','https://ipapi.co/json/']){
+    try{
+     const response=await fetch(url,{signal:AbortSignal.timeout(4500),cache:'no-store'});
+     if(!response.ok)continue;
+     const data=await response.json();
+     const country=String(data?.country_code||data?.country||'').toUpperCase();
+     const found=MARKETS.find(m=>m.country===country);
+     if(active&&found&&!window.sessionStorage.getItem('kit-market-manual')){setMarket(found);return;}
+    }catch{/* retry with next provider */}
+   }
+  };
+  void detect();
   return()=>{active=false};
  },[]);
  useEffect(()=>{
@@ -62,7 +77,7 @@ function useLocalPricing() {
    .then(r=>r.ok?r.json():null).then(data=>{const n=Number(data?.rates?.[market.currency]);if(active&&data?.result==='success'&&Number.isFinite(n)&&n>0)setRate(n);}).catch(()=>{});
   return()=>{active=false};
  },[market.currency]);
- const choose=(code:string)=>{const next=MARKETS.find(m=>m.country===code);if(next){setMarket(next);window.localStorage.setItem('kit-market',code);}};
+ const choose=(code:string)=>{const next=MARKETS.find(m=>m.country===code);if(next){setMarket(next);window.sessionStorage.setItem('kit-market-manual',code);}};
  const locale=LOCALES[market.language];
  const price=(usd:number)=>market.currency==='USD'?'US$ '+usd.toFixed(2):rate?formatMoney(usd*rate,market):'US$ '+usd.toFixed(2);
  const converted=market.currency==='USD'||rate!==null;

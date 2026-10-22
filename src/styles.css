@@ -386,3 +386,18 @@ html{scroll-behavior:smooth}
 .bonus-body h3{font-size:14px;line-height:1.4;letter-spacing:0;font-weight:900;color:#113b63}
 .bonus-body p{font-size:12px;line-height:1.55;margin-top:8px}
 @media(max-width:767px){.bonus-grid{grid-template-columns:1fr;gap:16px}.bonus-picture{height:240px;min-height:0;padding:16px}.bonus-mockup{max-height:none}.bonus-mockup img{max-height:210px}.bonus-body{padding:16px}}
+
+/* Material illustrations are explicitly separate from customer-submitted photos. */
+.testimonial-material{width:100%;margin:0 0 18px}
+.testimonial-material img{display:block;width:100%;height:205px;object-fit:cover;border-radius:12px;border:1px solid #e0e8df}
+.testimonial-material-letras img{object-position:center 42%}
+.testimonial-material-oracion img{object-position:center 65%}
+.testimonial-material-juegos img{object-position:center 95%}
+.testimonial-material figcaption{font-size:10px;line-height:1.5;color:#61756b;margin-top:7px}
+.guarantee-section{background:#fffdf5;padding:48px 0}
+.guarantee-panel{max-width:950px;margin:auto;display:flex;align-items:center;gap:32px;padding:32px;border:1px solid #c9dfcf;border-radius:24px;background:#fff;box-shadow:0 10px 30px #174b3510}
+.guarantee-seal{width:150px;min-height:150px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:2px solid #b58a2b;border-radius:50%;background:#fff5d6;color:#075a47}
+.guarantee-seal strong{font-size:28px;line-height:1.1;font-weight:900}.guarantee-seal span{font-size:10px;font-weight:900;letter-spacing:.09em}
+.guarantee-copy h2{font-size:clamp(25px,3vw,34px);line-height:1.15;color:#075a47;margin:13px 0}
+.guarantee-copy>p{font-size:16px;line-height:1.7;color:#294c3e}.guarantee-copy .guarantee-help{font-size:12px;color:#61756b;margin-top:12px}
+@media(max-width:767px){.guarantee-section{padding:34px 0}.guarantee-panel{flex-direction:column;gap:18px;padding:25px 19px;text-align:center}.guarantee-seal{width:130px;min-height:130px}.guarantee-copy>p{font-size:14px}.testimonial-material img{height:190px}}

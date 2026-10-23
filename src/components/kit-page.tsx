@@ -7,7 +7,6 @@ import childActivity from '@/assets/adan-actividad-en-casa.webp.asset.json';
 import alphabetDemo from '@/assets/alfabeto-biblico-demostracion.mp4.asset.json';
 import prayerSample from '@/assets/orar-sample.jpg.asset.json';
 import loveSample from '@/assets/amor-sample.jpg.asset.json';
-import bingoSample from '@/assets/bingo-carton-muestra.webp.asset.json';
 import { books, deliverables } from '@/lib/kit-deliverables';
 
 
@@ -102,7 +101,7 @@ function Checks({items, className = ''}: {items: string[]; className?: string}) 
 const activitySamples = [
  {image:childActivity, label:'Practicar letras y colorear', detail:'Letra A — Adán · Alfabeto Bíblico'},
  {image:prayerSample, label:'Descubrir la oración', detail:'Mi oración para Dios · Aprendiendo a Orar'},
- {image:bingoSample, label:'Jugar en familia', detail:'Cartón real · Bingo Bíblico en Familia'},
+ {image:loveSample, label:'Aprender sobre el amor de Dios', detail:'Actitudes correctas · El Amor de Dios'},
 ];
 const bookExamples = [pa, prayerSample, loveSample];
 const bookSummaries = [

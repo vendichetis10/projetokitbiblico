@@ -648,3 +648,13 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}
  .final-price-box .offer-condition{font-size:12px;padding:7px 11px}
  .final-price-box .offer-complete-label{font-size:14px}
 }
+
+/* Silent, inline book preview; native controls allow pausing the loop. */
+.inline-book-demo{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:32px;max-width:900px;margin:24px auto 0;padding:24px 36px;background:#fff;border:1px solid #d8e8ed;border-radius:18px}
+.inline-demo-copy{max-width:430px}
+.inline-demo-copy .eyebrow{font-size:10px;margin-bottom:10px}
+.inline-demo-copy h3{font-size:29px;line-height:1.15;color:#123e63}
+.inline-demo-copy p{font-size:14px;line-height:1.6;color:#60717b;margin-top:10px}
+.inline-demo-note{display:block;font-size:11px;line-height:1.5;color:#285f49;margin-top:14px}
+.inline-demo-video{display:block;width:auto;height:360px;max-width:100%;aspect-ratio:480/1076;object-fit:contain;border-radius:10px;background:#f1f9ff}
+@media(max-width:767px){.inline-book-demo{grid-template-columns:minmax(0,1fr);gap:16px;padding:20px 16px;margin-top:24px;text-align:center}.inline-demo-copy{max-width:340px;margin:auto}.inline-demo-copy h3{font-size:24px}.inline-demo-copy p{font-size:13px;margin-top:7px}.inline-demo-note{font-size:10px;margin-top:9px}.inline-demo-video{height:360px;max-height:65svh;margin:auto}}

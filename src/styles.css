@@ -569,3 +569,21 @@ html{scroll-behavior:smooth}
  .conversion-page .center-cta{margin-top:22px}
 }
 @media(max-width:359px){.conversion-page .hero h1{font-size:25px}.activity-preview img{height:120px}.conversion-page .mobile-bar p{font-size:9px}.conversion-page .mobile-bar strong{font-size:19px}}
+
+/* Large, manually navigated activity samples on small screens. */
+.activity-navigation{display:none}
+@media(max-width:767px){
+ .activity-grid{grid-template-columns:minmax(0,1fr);max-width:360px}
+ .activity-card{padding:12px;border-radius:16px}
+ .activity-card[data-active="false"]{display:none}
+ .activity-preview img{height:auto;aspect-ratio:3/4;max-height:380px;object-fit:contain}
+ .activity-preview>span{font-size:12px;padding:9px 4px}
+ .activity-card>div{padding:12px 0 0}
+ .activity-card h3{font-size:20px}
+ .activity-card p{font-size:12px;line-height:1.5;margin-top:5px}
+ .activity-navigation{display:flex;justify-content:space-between;align-items:center;gap:8px;max-width:360px;margin:14px auto 0}
+ .activity-navigation button{min-height:44px;padding:9px 12px;border:1px solid #075a47;border-radius:10px;background:#fff;color:#075a47;font-size:13px;font-weight:800;cursor:pointer}
+ .activity-navigation button:disabled{opacity:.45;cursor:default}
+ .activity-navigation button:focus-visible{outline:3px solid #e8ae24;outline-offset:3px}
+ .activity-navigation span{color:#285f49;font-size:13px;font-weight:800;white-space:nowrap}
+}

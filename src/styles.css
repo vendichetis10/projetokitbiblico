@@ -627,3 +627,24 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}
  .book-value>small{font-size:10px;max-width:85px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Highlight the complete-kit offer without introducing an expiry or countdown. */
+.conversion-page .final-offer{background:radial-gradient(ellipse at 85% 10%,#fff0b2 0,transparent 45%),linear-gradient(140deg,#d9f2e4,#eef8f2)}
+.conversion-page .final-offer-panel{border:2px solid #d5aa39;border-top:7px solid #e8bb43;background:#fffef8;box-shadow:0 16px 45px #124d3618}
+.conversion-page .final-offer-badge{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#ffeb9e;color:#5f4311;border:1px solid #e6c165;font-size:12px;letter-spacing:.06em}
+.conversion-page .final-offer-checkout{border:1px solid #bbd9c5;background:#fff;border-radius:20px}
+.conversion-page .final-reference{display:flex;flex-direction:column;align-items:center;gap:7px;padding:15px 10px;border:1px solid #e7dcc2;border-radius:12px;background:#f8f5ec;margin:12px 0 0;color:#526456;font-size:13px;line-height:1.4}
+.conversion-page .final-reference>span{max-width:270px;font-weight:700}
+.conversion-page .final-reference strong{display:block;color:#344d3c;font-size:32px;line-height:1.15;letter-spacing:-.025em}
+.final-reference sup{font-size:13px;vertical-align:super;line-height:0;margin-left:2px}
+.conversion-page .final-price-box{margin-top:12px;border:1px solid #067347;background:linear-gradient(145deg,#075b3e,#078855);padding:18px 12px}
+.final-price-box .offer-condition{display:block;width:fit-content;margin:0 auto 12px;padding:7px 12px;border-radius:7px;background:#ffe393;color:#4c3a11;font-size:13px;font-weight:900;line-height:1.35}
+.final-price-box .offer-complete-label{display:block;font-size:15px;line-height:1.4;font-weight:800}
+@media(max-width:767px){
+ .conversion-page .final-offer-panel{border-radius:20px;border-top-width:6px}
+ .conversion-page .final-offer-badge{font-size:10px;padding:8px 11px}
+ .conversion-page .final-reference{font-size:12px;padding:12px 9px}
+ .conversion-page .final-reference strong{font-size:31px}
+ .final-price-box .offer-condition{font-size:12px;padding:7px 11px}
+ .final-price-box .offer-complete-label{font-size:14px}
+}

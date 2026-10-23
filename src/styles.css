@@ -550,9 +550,13 @@ html{scroll-behavior:smooth}
  .conversion-page .final-offer-top{margin-bottom:18px}
  .conversion-page .final-offer-top h2{font-size:27px}
  .conversion-page .final-offer-grid{display:flex;flex-direction:column;gap:18px}
- .conversion-page .final-offer-content{order:2;width:100%}
- .conversion-page .final-offer-checkout{order:1;width:100%;padding:18px 13px}
- .conversion-page .final-offer-content .offer-image{max-width:220px}
+ .conversion-page .final-offer-content{order:1;width:100%;padding:0 0 16px;border-bottom:1px solid #dce8d9}
+ .conversion-page .final-offer-checkout{order:2;width:100%;padding:18px 13px}
+ .conversion-page .final-offer-content .offer-image{max-width:360px;width:100%;height:auto}
+ .conversion-page .final-offer-content .final-offer-visual{padding:8px 0 14px;background:radial-gradient(ellipse at center,#fff0ad 0%,#fff9dc 45%,transparent 75%);border-radius:16px}
+ .conversion-page .final-offer-content .final-inventory{margin-top:10px;gap:9px 10px}
+ .conversion-page .final-offer-content .final-inventory li{font-size:11px;line-height:1.45}
+ .conversion-page .final-offer-content .final-inventory svg{color:#078353;width:16px;height:16px}
  .conversion-page .final-inventory{font-size:10px;grid-template-columns:1fr 1fr;gap:5px 9px}
  .conversion-page .final-offer .format-label{font-size:11px}
  .conversion-page .final-reference{font-size:11px}

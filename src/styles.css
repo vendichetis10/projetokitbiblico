@@ -587,3 +587,13 @@ html{scroll-behavior:smooth}
  .activity-navigation button:focus-visible{outline:3px solid #e8ae24;outline-offset:3px}
  .activity-navigation span{color:#285f49;font-size:13px;font-weight:800;white-space:nowrap}
 }
+
+/* Product demonstration: owner-supplied book video and illustrative activity photo. */
+.activity-video-button{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;margin-top:10px;padding:9px 10px;border:1px solid #075a47;border-radius:9px;background:#075a47;color:#fff;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.activity-video-button:focus-visible{outline:3px solid #e8ae24;outline-offset:3px}
+.video-duration{font-size:10px;font-weight:600;opacity:.85;white-space:nowrap}
+.sample-video-dialog{display:flex;flex-direction:column;align-items:center;gap:10px;width:min(100%,480px);max-height:90dvh;color:#fff}
+.sample-video-dialog h3{font-size:18px;text-align:center;line-height:1.3;padding-inline:25px}
+.sample-video-dialog video{display:block;max-width:100%;width:auto;min-height:0;max-height:calc(90dvh - 100px);aspect-ratio:480/1076;object-fit:contain;background:#000;border-radius:10px}
+.sample-video-dialog p{font-size:11px;text-align:center;line-height:1.4}
+@media(max-width:767px){.activity-video-button{font-size:14px}.sample-video-dialog{max-height:85dvh}.sample-video-dialog video{max-height:calc(85dvh - 110px)}}

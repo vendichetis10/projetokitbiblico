@@ -597,3 +597,33 @@ html{scroll-behavior:smooth}
 .sample-video-dialog video{display:block;max-width:100%;width:auto;min-height:0;max-height:calc(90dvh - 100px);aspect-ratio:480/1076;object-fit:contain;background:#000;border-radius:10px}
 .sample-video-dialog p{font-size:11px;text-align:center;line-height:1.4}
 @media(max-width:767px){.activity-video-button{font-size:14px}.sample-video-dialog{max-height:85dvh}.sample-video-dialog video{max-height:calc(85dvh - 110px)}}
+
+/* Offer discovery test: product first, price after the complete presentation. */
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+.conversion-page{padding-bottom:0}
+.conversion-page .hero-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px}
+.conversion-page .hero-visual .product-image{width:100%;max-width:570px;margin-top:14px}
+.hero-discovery{margin-top:22px}
+.hero-discovery .cta{gap:12px;width:100%;max-width:410px}
+.hero-discovery-note{font-size:12px;color:#526b60;margin-top:12px;line-height:1.5}
+.hero-discovery .purchase-assurance{margin-top:10px}
+.conversion-page .book-value{display:grid;grid-template-columns:1fr auto;gap:3px 8px;width:100%;margin-top:5px;padding:12px;background:#eff8f1;border:1px solid #cfe5d5;border-radius:10px}
+.book-value>span{grid-column:1/-1;color:#4c675a;font-size:10px;font-weight:700;line-height:1.4}
+.book-value>strong{font-size:22px;line-height:1.15;color:#075a47;letter-spacing:-.025em}
+.book-value>small{align-self:center;text-align:right;font-size:9px;line-height:1.3;font-weight:800;color:#177049;max-width:65px}
+.book-value-note{max-width:800px;margin:17px auto 0;text-align:center;font-size:10px;color:#637169;line-height:1.5}
+@media(max-width:767px){
+ .conversion-page .hero{padding-block:18px 28px}
+ .conversion-page .mobile-hero-mockup{margin:12px auto 7px;max-width:430px}
+ .conversion-page .mobile-hero-mockup img{width:100%;height:auto;max-height:270px;object-fit:contain}
+ .conversion-page .mobile-hero-mockup .format-label{font-size:11px;margin-bottom:6px}
+ .hero-discovery{margin-top:11px}
+ .hero-discovery .cta{max-width:none}
+ .hero-discovery-note{font-size:11px;margin-top:10px}
+ .conversion-page .hero-discovery .purchase-assurance{margin-top:8px}
+ .conversion-page .book-value{padding:10px;margin-top:4px}
+ .book-value>strong{font-size:23px}
+ .book-value>span{font-size:10px}
+ .book-value>small{font-size:10px;max-width:85px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

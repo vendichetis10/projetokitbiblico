@@ -2,10 +2,9 @@
   "version": 1,
   "asset_id": "2ed154bf-36e3-46da-ad31-ace22d6fb552",
   "project_id": "8e2a6b31-2997-48f7-9671-ffe772fc54ef",
-  "url": "/__l5e/assets-v1/2ed154bf-36e3-46da-ad31-ace22d6fb552/camino.jpg",
-  "r2_key": "a/v1/8e2a6b31-2997-48f7-9671-ffe772fc54ef/2ed154bf-36e3-46da-ad31-ace22d6fb552/camino.jpg",
-  "original_filename": "camino.jpg",
-  "size": 148257,
-  "content_type": "image/jpeg",
+  "url": "/assets/camino.png",
+  "original_filename": "camino.png",
+  "size": 2481540,
+  "content_type": "image/png",
   "created_at": "2026-10-16T01:49:34Z"
 }

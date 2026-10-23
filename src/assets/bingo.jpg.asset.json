@@ -2,10 +2,9 @@
   "version": 1,
   "asset_id": "a051a8ea-5f40-4ce3-96bb-a836c23ac4f0",
   "project_id": "8e2a6b31-2997-48f7-9671-ffe772fc54ef",
-  "url": "/__l5e/assets-v1/a051a8ea-5f40-4ce3-96bb-a836c23ac4f0/bingo.jpg",
-  "r2_key": "a/v1/8e2a6b31-2997-48f7-9671-ffe772fc54ef/a051a8ea-5f40-4ce3-96bb-a836c23ac4f0/bingo.jpg",
-  "original_filename": "bingo.jpg",
-  "size": 51296,
-  "content_type": "image/jpeg",
+  "url": "/assets/bingo.png",
+  "original_filename": "bingo.png",
+  "size": 2163558,
+  "content_type": "image/png",
   "created_at": "2026-10-16T01:49:34Z"
 }

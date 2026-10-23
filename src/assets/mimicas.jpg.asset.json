@@ -2,10 +2,9 @@
   "version": 1,
   "asset_id": "85defd79-5ca6-451f-82da-0a6dbab3067a",
   "project_id": "8e2a6b31-2997-48f7-9671-ffe772fc54ef",
-  "url": "/__l5e/assets-v1/85defd79-5ca6-451f-82da-0a6dbab3067a/mimicas.jpg",
-  "r2_key": "a/v1/8e2a6b31-2997-48f7-9671-ffe772fc54ef/85defd79-5ca6-451f-82da-0a6dbab3067a/mimicas.jpg",
-  "original_filename": "mimicas.jpg",
-  "size": 148345,
-  "content_type": "image/jpeg",
+  "url": "/assets/mimicas.png",
+  "original_filename": "mimicas.png",
+  "size": 2370877,
+  "content_type": "image/png",
   "created_at": "2026-10-16T01:49:34Z"
 }

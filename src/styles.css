@@ -2,6 +2,9 @@
 @import "tw-animate-css";
 @source "../src";
 @custom-variant dark (&:is(.dark *));
+@font-face{font-family:'Baloo 2';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/baloo-2-latin.woff2') format('woff2')}
+@font-face{font-family:'Nunito Sans';font-style:normal;font-weight:400 900;font-display:swap;src:url('/fonts/nunito-sans-latin.woff2') format('woff2')}
+
 @theme inline {
  --font-sans: 'Nunito Sans', sans-serif;
  --font-display: 'Baloo 2', sans-serif;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BookOpen, Check, X, FileText, Printer, ShieldCheck, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import kit from '@/assets/kit-biblico-5-bonos.png.asset.json';
+import kit from '@/assets/kit-biblico-5-bonos.webp.asset.json';
 import pa from '@/assets/alfabeto-a.jpg.asset.json';
 import childActivity from '@/assets/adan-actividad-en-casa.webp.asset.json';
 import alphabetDemo from '@/assets/alfabeto-biblico-loop-4s.mp4.asset.json';

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import { BookOpen, Heart, Search, X, ArrowLeft, Download, Printer, Sparkles, Grid2X2, CheckCircle2, Clock3, ShieldCheck, Menu } from 'lucide-react';
 import { books, bonuses } from '@/lib/kit-deliverables';
-import kit from '@/assets/kit-biblico-5-bonos.png.asset.json';
+import kit from '@/assets/kit-biblico-5-bonos.webp.asset.json';
 import './biblioteca-biblica.css';
 
 type Material = { id: string; name: string; text: string; image: { url: string }; type: 'libro' | 'juego'; pages?: number };

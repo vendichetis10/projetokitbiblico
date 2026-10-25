@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { KitPage } from '@/components/kit-page';
-import { mockupAvifSrcSet, mockupSizes } from '@/lib/kit-mockup';
+import { mockupSrcSet, mockupSizes } from '@/lib/kit-mockup';
 import { getRequestCountry } from '@/lib/request-country';
 export const Route = createFileRoute('/kit-biblico')({
  loader: () => getRequestCountry(),
@@ -10,8 +10,8 @@ export const Route = createFileRoute('/kit-biblico')({
  {property:'og:title',content:'Kit Bíblico Infantil — 3 libros + 5 bonos'},
  {property:'og:description',content:'Letras, dibujos y juegos bíblicos para compartir en familia. 8 materiales digitales: 3 libros y 5 bonos por US$ 7.90.'},
  {property:'og:type',content:'website'}, {name:'twitter:card',content:'summary_large_image'}
- ], links:[{rel:'preload',as:'image',type:'image/avif',
-  imageSrcSet:mockupAvifSrcSet,imageSizes:mockupSizes,fetchPriority:'high'}]}), component:KitRoute
+ ], links:[{rel:'preload',as:'image',type:'image/webp',
+  imageSrcSet:mockupSrcSet,imageSizes:mockupSizes,fetchPriority:'high'}]}), component:KitRoute
 });
 function KitRoute() {
  const country = Route.useLoaderData();

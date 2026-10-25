@@ -20,7 +20,7 @@ export function BookPreview() {
  }, []);
 
  return <video ref={ref} className="inline-demo-video" src={nearby ? demo.url : undefined}
-  poster={nearby ? '/assets/alfabeto-a-w320.webp' : undefined} autoPlay muted loop playsInline controls
+  poster="/assets/alfabeto-a-w320.webp" autoPlay muted loop playsInline controls
   preload={nearby ? 'auto' : 'none'} width="320" height="718"
   aria-label="Vista previa automática del Alfabeto Bíblico, sin sonido">
   Tu navegador no admite video. <a href={demo.url}>Ver la muestra del Alfabeto Bíblico</a>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BookOpen, Check, X, FileText, Printer, ShieldCheck, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { KitMockup } from './kit-mockup';
+import kit from '@/assets/kit-biblico-5-bonos.webp.asset.json';
 import pa from '@/assets/alfabeto-a.jpg.asset.json';
 import childActivity from '@/assets/adan-actividad-en-casa.webp.asset.json';
 import { BookPreview } from './book-preview';
@@ -29,7 +29,7 @@ const MARKETS: Market[] = [
  {country:'US',label:'Estados Unidos',currency:'USD',locale:'en-US',language:'en'},
  {country:'ES',label:'España',currency:'EUR',locale:'es-ES',language:'es'},
 ];
-const DEFAULT_MARKET = MARKETS[0]!;
+const DEFAULT_MARKET = MARKETS[0];
 type LocaleText = { headlineStart:string; headlineEmphasis:string; headlineEnd:string; intro:string; mainBooks:string; bonusGames:string; digitalDownload:string; priceTop:string; location:string; select:string; estimate:string; checkout:string; original:string; buy:string; short:string; only:string; currencyDisclaimer:string };
 const LOCALES: Record<Market['language'],LocaleText> = {
  es:{headlineStart:'¡Menos pantallas!',headlineEmphasis:'Letras, colores y fe',headlineEnd:'en familia.',intro:'Actividades bíblicas para practicar letras, colorear y jugar juntos. 3 libros y 5 juegos en PDF, en español.',mainBooks:'3 libros ilustrados',bonusGames:'5 juegos incluidos',digitalDownload:'Descarga digital',priceTop:'HOY, LA COLECCIÓN COMPLETA POR',location:'Tu país',select:'Selecciona tu país',estimate:'Precio estimado en tu moneda',checkout:'Ver precio final y pagar',original:'Precio base',buy:'¡QUIERO MI KIT COMPLETO!',short:'Pago único · PDF digital',only:'Todo el kit por solo',currencyDisclaimer:'Conversión de referencia. El importe y la moneda finales los confirma Kiwify antes del pago.'},
@@ -46,9 +46,8 @@ function formatMoney(value:number, market:Market) {
   return market.currency+' '+amount;
  }catch{return market.currency+' '+value.toFixed(digits);}
 }
-function useLocalPricing(initialCountry: string) {
- const initialMarket = MARKETS.find(m => m.country === initialCountry);
- const [market,setMarket] = useState<Market>(initialMarket ?? DEFAULT_MARKET);
+function useLocalPricing() {
+ const [market,setMarket] = useState<Market>(DEFAULT_MARKET);
  const [rate,setRate] = useState<number|null>(null);
  useEffect(()=>{
   let active=true;
@@ -58,9 +57,6 @@ function useLocalPricing(initialCountry: string) {
   const selected=MARKETS.find(m=>m.country===manual);
   if(selected){setMarket(selected);return()=>{active=false};}
   window.localStorage.removeItem('kit-market');
-  // The server-provided country is authoritative. Avoid a later language swap
-  // and unnecessary geo requests; retain the existing fallback elsewhere.
-  if(initialMarket)return()=>{active=false};
   const browserLang=navigator.language?.toLowerCase()||'';
   const inferred=MARKETS.find(m=>browserLang.endsWith('-'+m.country.toLowerCase()));
   if(inferred)setMarket(inferred);
@@ -79,7 +75,7 @@ function useLocalPricing(initialCountry: string) {
   };
   void detect();
   return()=>{active=false};
- },[initialMarket]);
+ },[]);
  useEffect(()=>{
   let active=true;setRate(null);
   if(market.currency==='USD'){setRate(1);return;}
@@ -130,8 +126,8 @@ const faqs = [
  ['¿Puedo usarlo con grupos?','Consulta las condiciones de uso del producto para conocer los permisos de impresión y utilización con grupos o instituciones.'],
  ['¿Cómo funciona la garantía de 7 días?','Tienes una garantía incondicional de 7 días. Si el material no cumple tus expectativas, te devolvemos el 100% de tu dinero sin preguntas. Solicita el reembolso siguiendo las instrucciones de tu compra en Kiwify.'],
 ];
-export function KitPage({ initialCountry = '' }: { initialCountry?: string }) {
- const {market,choose,locale,price}=useLocalPricing(initialCountry);
+export function KitPage() {
+ const {market,choose,locale,price}=useLocalPricing();
  const [activeActivity,setActiveActivity] = useState(0);
  const [expanded,setExpanded] = useState<{url:string; label:string} | null>(null);
  useEffect(()=> { if(!expanded) return; const previous=document.body.style.overflow; document.body.style.overflow='hidden'; const key=(e:KeyboardEvent)=>{if(e.key==='Escape')setExpanded(null);}; window.addEventListener('keydown',key); return ()=>{document.body.style.overflow=previous;window.removeEventListener('keydown',key);}; },[expanded]);
@@ -142,10 +138,10 @@ export function KitPage({ initialCountry = '' }: { initialCountry?: string }) {
  <span className="hero-kicker"><Sparkles size={15} aria-hidden="true"/> ACTIVIDADES BÍBLICAS · 3 A 10 AÑOS</span>
  <h1 id="kit-heading">{locale.headlineStart}<br/><span>{locale.headlineEmphasis}</span> {locale.headlineEnd}</h1>
  <p className="hero-lead">{locale.intro}</p>
- <div className="mobile-hero-mockup"><p className="format-label"><FileText size={15} aria-hidden="true"/> PDF digital para descargar e imprimir</p><KitMockup alt="Kit digital: tres libros y cinco juegos para imprimir" priority/></div>
+ <div className="mobile-hero-mockup"><p className="format-label"><FileText size={15} aria-hidden="true"/> PDF digital para descargar e imprimir</p><img {...imageProps(kit.url, '(max-width: 767px) calc(100vw - 48px), 570px')} alt="Kit digital: tres libros y cinco juegos para imprimir" width="1448" height="1086" fetchPriority="high"/></div>
  <div className="hero-proof"><span>3 libros ilustrados</span><span>5 juegos incluidos</span><span>En español</span></div>
  <div className="hero-discovery"><Button asChild className="cta cta-yellow"><a href="#oferta">{market.language==='pt'?'CONHECER O KIT COMPLETO':market.language==='en'?'EXPLORE THE COMPLETE KIT':'CONOCE EL KIT COMPLETO'} <span aria-hidden="true">↓</span></a></Button><p className="hero-discovery-note">PDFs en español · Descarga e imprime a tu ritmo</p><div className="purchase-assurance"><span><ShieldCheck size={16} aria-hidden="true"/> Garantía de 7 días · 100% de devolución</span></div></div>
- </div><div className="hero-visual"><p className="format-label"><FileText size={17} aria-hidden="true"/> PDF digital para descargar e imprimir</p><KitMockup className="product-image" alt="Colección digital de tres libros y cinco juegos bíblicos" priority/><span className="digital-label">8 materiales digitales · No se envían libros físicos</span></div></div></section>
+ </div><div className="hero-visual"><p className="format-label"><FileText size={17} aria-hidden="true"/> PDF digital para descargar e imprimir</p><img className="product-image" {...imageProps(kit.url, '(max-width: 767px) calc(100vw - 48px), 570px')} alt="Colección digital de tres libros y cinco juegos bíblicos" width="1448" height="1086" fetchPriority="high"/><span className="digital-label">8 materiales digitales · No se envían libros físicos</span></div></div></section>
 
  <section className="section activity-section" id="actividades" aria-labelledby="activity-heading"><div className="container"><div className="section-heading"><span className="eyebrow">ASÍ SON LOS MATERIALES POR DENTRO</span><h2 id="activity-heading">Elige una hoja. Preparen los colores. Empiecen juntos.</h2><p>Explora las actividades y mira el Alfabeto Bíblico en movimiento. Toca las imágenes para ampliarlas.</p></div><div className="activity-grid" id="activity-samples">{activitySamples.map((sample,index)=><article className="activity-card" data-active={index===activeActivity} key={sample.label}><button type="button" className="activity-preview" aria-label={`Ampliar ${sample.detail}`} onClick={()=>setExpanded({url:sample.image.url,label:sample.detail})}><img {...imageProps(sample.image.url, '(max-width: 767px) 304px, 230px')} alt={sample.detail} loading="lazy"/><span>Ampliar actividad</span></button><div><span className="activity-number">0{index+1}</span><h3>{sample.label}</h3><p>{sample.detail}</p></div></article>)}</div><nav className="activity-navigation" aria-label="Elegir una actividad de muestra"><button type="button" aria-controls="activity-samples" disabled={activeActivity===0} onClick={()=>setActiveActivity(index=>Math.max(0,index-1))}>← Anterior</button><span role="status" aria-live="polite" aria-atomic="true">{activeActivity+1} de {activitySamples.length}</span><button type="button" aria-controls="activity-samples" disabled={activeActivity===activitySamples.length-1} onClick={()=>setActiveActivity(index=>Math.min(activitySamples.length-1,index+1))}>Siguiente →</button></nav><div className="inline-book-demo" aria-labelledby="inline-demo-heading"><div className="inline-demo-copy"><span className="eyebrow">UNA MIRADA AL INTERIOR</span><h3 id="inline-demo-heading">Mira el Alfabeto Bíblico por dentro.</h3><p>Páginas para descubrir personajes bíblicos, practicar letras y colorear.</p><span className="inline-demo-note">Vista previa de 4 segundos · Sin sonido</span></div><BookPreview/></div></div></section>
 
@@ -157,7 +153,7 @@ export function KitPage({ initialCountry = '' }: { initialCountry?: string }) {
 
  <section className="section guarantee-section" aria-labelledby="guarantee-heading"><div className="container"><div className="guarantee-panel"><div className="guarantee-seal" aria-label="Garantía de 7 días"><ShieldCheck size={38} aria-hidden="true"/><strong>7 DÍAS</strong><span>DE GARANTÍA</span></div><div className="guarantee-copy"><span className="eyebrow">COMPRA CON TRANQUILIDAD</span><h2 id="guarantee-heading">Garantía incondicional de 7 días.</h2><p>Si el material no cumple tus expectativas, te devolvemos el <strong>100% de tu dinero sin preguntas</strong>.</p><p className="guarantee-help">Solicita el reembolso siguiendo las instrucciones de tu compra en Kiwify.</p></div></div></div></section>
 
- <section className="section offer final-offer" id="oferta" aria-labelledby="offer-heading"><div className="container"><div className="offer-panel final-offer-panel"><div className="final-offer-top"><span className="final-offer-badge"><Sparkles size={15} aria-hidden="true"/> OFERTA DEL KIT COMPLETO</span><h2 id="offer-heading">3 libros + 5 juegos.<br/><span>Una nueva actividad para compartir.</span></h2></div><div className="final-offer-grid"><div className="final-offer-content"><div className="final-offer-visual"><KitMockup className="offer-image" alt="Kit digital con tres libros y cinco bonos para imprimir"/></div><Checks className="final-inventory" items={deliverables.map(item=>item.name)}/></div><div className="final-offer-checkout"><p className="format-label">PDF digital para descargar e imprimir</p><div className="final-reference"><span>Valor individual sugerido de los 3 libros:</span><strong><LocalPrice usd={15.70} price={price}/><sup>*</sup></strong></div><div className="final-price-box"><span className="offer-condition">Pero solo en esta oferta</span><span className="offer-complete-label">La colección completa por solo</span><div className="final-price localized-price"><strong><LocalPrice usd={7.90} price={price}/></strong></div><span className="final-payment">UN SOLO PAGO · SIN MENSUALIDADES</span></div><Buy yellow className="final-buy">¡QUIERO MI KIT DIGITAL COMPLETO! →</Buy><div className="purchase-assurance"><span><ShieldCheck size={16} aria-hidden="true"/> Garantía de 7 días · 100% de devolución</span><span><FileText size={16} aria-hidden="true"/> Descarga tras confirmar el pago</span></div><p className="final-fine">PDFs en español. Imprime en casa o en una imprenta.<br/>No se envían productos físicos.</p><p className="currency-disclaimer">{LOCALES.es.currencyDisclaimer}</p></div></div><p className="final-value-note">*Valores individuales sugeridos; no son precios anteriores ni descuentos históricos verificados.</p></div></div></section>
+ <section className="section offer final-offer" id="oferta" aria-labelledby="offer-heading"><div className="container"><div className="offer-panel final-offer-panel"><div className="final-offer-top"><span className="final-offer-badge"><Sparkles size={15} aria-hidden="true"/> OFERTA DEL KIT COMPLETO</span><h2 id="offer-heading">3 libros + 5 juegos.<br/><span>Una nueva actividad para compartir.</span></h2></div><div className="final-offer-grid"><div className="final-offer-content"><div className="final-offer-visual"><img {...imageProps(kit.url, '(max-width: 767px) calc(100vw - 48px), 570px')} className="offer-image" alt="Kit digital con tres libros y cinco bonos para imprimir" width="1448" height="1086" loading="lazy"/></div><Checks className="final-inventory" items={deliverables.map(item=>item.name)}/></div><div className="final-offer-checkout"><p className="format-label">PDF digital para descargar e imprimir</p><div className="final-reference"><span>Valor individual sugerido de los 3 libros:</span><strong><LocalPrice usd={15.70} price={price}/><sup>*</sup></strong></div><div className="final-price-box"><span className="offer-condition">Pero solo en esta oferta</span><span className="offer-complete-label">La colección completa por solo</span><div className="final-price localized-price"><strong><LocalPrice usd={7.90} price={price}/></strong></div><span className="final-payment">UN SOLO PAGO · SIN MENSUALIDADES</span></div><Buy yellow className="final-buy">¡QUIERO MI KIT DIGITAL COMPLETO! →</Buy><div className="purchase-assurance"><span><ShieldCheck size={16} aria-hidden="true"/> Garantía de 7 días · 100% de devolución</span><span><FileText size={16} aria-hidden="true"/> Descarga tras confirmar el pago</span></div><p className="final-fine">PDFs en español. Imprime en casa o en una imprenta.<br/>No se envían productos físicos.</p><p className="currency-disclaimer">{LOCALES.es.currencyDisclaimer}</p></div></div><p className="final-value-note">*Valores individuales sugeridos; no son precios anteriores ni descuentos históricos verificados.</p></div></div></section>
 
  <section className="section faq-section" aria-labelledby="faq-heading"><div className="container"><div className="section-heading"><h2 id="faq-heading">¿Tienes alguna duda?</h2></div><div className="faq-list">{faqs.map(([question,answer])=><details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div><div className="center-cta"><Buy yellow>¡QUIERO EMPEZAR CON MI KIT!</Buy></div></div></section>
  </main><footer className="footer"><strong>Kit Bíblico Infantil — 3 libros + 5 juegos.</strong><p>PDFs en español para descargar e imprimir.</p></footer>

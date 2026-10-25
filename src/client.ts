@@ -2,7 +2,7 @@
 // There is no artificial timer: hydration starts on the next painted frame.
 function startClient() {
  requestAnimationFrame(() => {
-  requestAnimationFrame(() => { void import('./hydrate-app'); });
+  requestAnimationFrame(() => { void import('./hydrate-app').then(app => app.hydrate()); });
  });
 }
 

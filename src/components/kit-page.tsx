@@ -29,7 +29,7 @@ const MARKETS: Market[] = [
  {country:'US',label:'Estados Unidos',currency:'USD',locale:'en-US',language:'en'},
  {country:'ES',label:'España',currency:'EUR',locale:'es-ES',language:'es'},
 ];
-const DEFAULT_MARKET = MARKETS[0];
+const DEFAULT_MARKET = MARKETS[0]!;
 type LocaleText = { headlineStart:string; headlineEmphasis:string; headlineEnd:string; intro:string; mainBooks:string; bonusGames:string; digitalDownload:string; priceTop:string; location:string; select:string; estimate:string; checkout:string; original:string; buy:string; short:string; only:string; currencyDisclaimer:string };
 const LOCALES: Record<Market['language'],LocaleText> = {
  es:{headlineStart:'¡Menos pantallas!',headlineEmphasis:'Letras, colores y fe',headlineEnd:'en familia.',intro:'Actividades bíblicas para practicar letras, colorear y jugar juntos. 3 libros y 5 juegos en PDF, en español.',mainBooks:'3 libros ilustrados',bonusGames:'5 juegos incluidos',digitalDownload:'Descarga digital',priceTop:'HOY, LA COLECCIÓN COMPLETA POR',location:'Tu país',select:'Selecciona tu país',estimate:'Precio estimado en tu moneda',checkout:'Ver precio final y pagar',original:'Precio base',buy:'¡QUIERO MI KIT COMPLETO!',short:'Pago único · PDF digital',only:'Todo el kit por solo',currencyDisclaimer:'Conversión de referencia. El importe y la moneda finales los confirma Kiwify antes del pago.'},
@@ -46,8 +46,9 @@ function formatMoney(value:number, market:Market) {
   return market.currency+' '+amount;
  }catch{return market.currency+' '+value.toFixed(digits);}
 }
-function useLocalPricing() {
- const [market,setMarket] = useState<Market>(DEFAULT_MARKET);
+function useLocalPricing(initialCountry: string) {
+ const initialMarket = MARKETS.find(m => m.country === initialCountry);
+ const [market,setMarket] = useState<Market>(initialMarket ?? DEFAULT_MARKET);
  const [rate,setRate] = useState<number|null>(null);
  useEffect(()=>{
   let active=true;
@@ -57,6 +58,9 @@ function useLocalPricing() {
   const selected=MARKETS.find(m=>m.country===manual);
   if(selected){setMarket(selected);return()=>{active=false};}
   window.localStorage.removeItem('kit-market');
+  // The server-provided country is authoritative. Avoid a later language swap
+  // and unnecessary geo requests; retain the existing fallback elsewhere.
+  if(initialMarket)return()=>{active=false};
   const browserLang=navigator.language?.toLowerCase()||'';
   const inferred=MARKETS.find(m=>browserLang.endsWith('-'+m.country.toLowerCase()));
   if(inferred)setMarket(inferred);
@@ -75,7 +79,7 @@ function useLocalPricing() {
   };
   void detect();
   return()=>{active=false};
- },[]);
+ },[initialMarket]);
  useEffect(()=>{
   let active=true;setRate(null);
   if(market.currency==='USD'){setRate(1);return;}
@@ -126,8 +130,8 @@ const faqs = [
  ['¿Puedo usarlo con grupos?','Consulta las condiciones de uso del producto para conocer los permisos de impresión y utilización con grupos o instituciones.'],
  ['¿Cómo funciona la garantía de 7 días?','Tienes una garantía incondicional de 7 días. Si el material no cumple tus expectativas, te devolvemos el 100% de tu dinero sin preguntas. Solicita el reembolso siguiendo las instrucciones de tu compra en Kiwify.'],
 ];
-export function KitPage() {
- const {market,choose,locale,price}=useLocalPricing();
+export function KitPage({ initialCountry = '' }: { initialCountry?: string }) {
+ const {market,choose,locale,price}=useLocalPricing(initialCountry);
  const [activeActivity,setActiveActivity] = useState(0);
  const [expanded,setExpanded] = useState<{url:string; label:string} | null>(null);
  useEffect(()=> { if(!expanded) return; const previous=document.body.style.overflow; document.body.style.overflow='hidden'; const key=(e:KeyboardEvent)=>{if(e.key==='Escape')setExpanded(null);}; window.addEventListener('keydown',key); return ()=>{document.body.style.overflow=previous;window.removeEventListener('keydown',key);}; },[expanded]);

@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "visibility": "private-assets-required",
+  "note": "Do not upload paid PDF files to this public repository or embed public URLs. This manifest contains metadata only.",
+  "totalPages": 118,
+  "materials": [
+    {
+      "id": "libro-0",
+      "slug": "alfabeto-biblico",
+      "title": "Alfabeto Bíblico",
+      "pages": 30,
+      "category": "libro",
+      "status": "pending-private-upload"
+    },
+    {
+      "id": "libro-1",
+      "slug": "aprendiendo-a-orar",
+      "title": "Aprendiendo a Orar",
+      "pages": 21,
+      "category": "libro",
+      "status": "pending-private-upload"
+    },
+    {
+      "id": "libro-2",
+      "slug": "el-amor-de-dios",
+      "title": "El Amor de Dios",
+      "pages": 18,
+      "category": "libro",
+      "status": "pending-private-upload",
+      "languageNote": "Algunas páginas incluyen textos en portugués"
+    },
+    {
+      "id": "juego-0",
+      "slug": "bingo-biblico-en-familia",
+      "title": "Bingo Bíblico en Familia",
+      "pages": 10,
+      "category": "juego",
+      "status": "pending-private-upload"
+    },
+    {
+      "id": "juego-1",
+      "slug": "domino-de-personajes",
+      "title": "Dominó de Personajes",
+      "pages": 7,
+      "category": "juego",
+      "status": "pending-private-upload"
+    },
+    {
+      "id": "juego-2",
+      "slug": "el-camino-de-la-fe",
+      "title": "El Camino de la Fe",
+      "pages": 7,
+      "category": "juego",
+      "status": "pending-private-upload"
+    },
+    {
+      "id": "juego-3",
+      "slug": "mimicas-biblicas",
+      "title": "Mímicas Bíblicas",
+      "pages": 6,
+      "category": "juego",
+      "status": "pending-private-upload"
+    },
+    {
+      "id": "juego-4",
+      "slug": "10-aventuras-biblicas",
+      "title": "10 Aventuras Bíblicas",
+      "pages": 19,
+      "category": "juego",
+      "status": "pending-private-upload"
+    }
+  ]
+}

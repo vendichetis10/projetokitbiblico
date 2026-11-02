@@ -29,14 +29,14 @@ describe("Localized sales page", () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
     await mount();
     expect(container.querySelector('select[aria-label="País / moneda"]')).toHaveValue("CO");
-    expect(container.querySelector("h1")).toHaveTextContent("Un momento menos de pantalla.");
+    expect(container.querySelector("h1")).toHaveTextContent("Menos pantallas.");
     const purchase = container.querySelector('a[data-placement="hero"]')!;
     expect(purchase.getAttribute("href")).toContain("utm_source=meta");
     expect(purchase.getAttribute("href")).toContain("https://pay.kiwify.com/n3l7mr7");
     expect(container.textContent).toContain("US$ 7.90");
     await choose("Idioma", "en");
-    expect(container.querySelector("h1")).toHaveTextContent("One less moment on a screen.");
-    expect(container.textContent).toContain("From your inbox to the activity table.");
+    expect(container.querySelector("h1")).toHaveTextContent("Less screen time.");
+    expect(container.textContent).toContain("Made for everyday family time.");
     expect(container.querySelector('select[aria-label="Country / currency"]')).toHaveValue("CO");
     expect(document.documentElement.lang).toBe("en");
   });
@@ -44,12 +44,10 @@ describe("Localized sales page", () => {
     window.history.replaceState(null, "", "/kit-biblico?country=MX");
     vi.stubGlobal(
       "fetch",
-      vi
-        .fn()
-        .mockResolvedValue({
-          ok: true,
-          json: async () => ({ result: "success", rates: { USD: 1, MXN: 20, COP: 4000 } }),
-        }),
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ result: "success", rates: { USD: 1, MXN: 20, COP: 4000 } }),
+      }),
     );
     await mount();
     expect(container.textContent?.match(/≈ MXN 158.00/g)).toHaveLength(3);

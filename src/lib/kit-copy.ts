@@ -334,3 +334,111 @@ export const kitCopy = {
     sticky: "Complete kit",
   },
 };
+
+export const structureCopy = {
+  es: {
+    heroTitle: "Menos pantallas.",
+    heroAccent: "Más Biblia, juegos y tiempo en familia.",
+    heroIntro:
+      "3 libros y 5 juegos bíblicos en PDF para colorear, aprender y compartir. Elige una hoja, imprímela y empiecen juntos.",
+    problemKicker: "UNA ALTERNATIVA PARA LA RUTINA",
+    problemTitle: "¿Qué hacemos hoy sin pantallas?",
+    problemText:
+      "Encontrar una actividad que les interese no siempre es fácil. Y preparar todo desde cero toma tiempo.",
+    problemSolution:
+      "Ten a mano letras, dibujos y juegos bíblicos listos para elegir, imprimir y compartir.",
+    sampleNote:
+      "Páginas reales de los tres libros. Amplíalas para revisar el contenido antes de comprar.",
+    benefitsTitle: "Pensado para la vida en familia.",
+    benefitsIntro:
+      "Una propuesta sencilla para convertir una hoja impresa en un momento compartido.",
+    benefits: [
+      [
+        "Actividades listas",
+        "Abre el PDF y elige una actividad, sin tener que diseñarla desde cero.",
+      ],
+      [
+        "Biblia a través del juego",
+        "Relaciona letras, dibujos, oración y valores con historias y personajes bíblicos.",
+      ],
+      [
+        "Momentos para compartir",
+        "Acompaña a los pequeños mientras colorean, conversan y juegan por turnos.",
+      ],
+      [
+        "Impresión a tu ritmo",
+        "En casa o en una imprenta. Prepara solo las hojas que van a utilizar.",
+      ],
+    ],
+    guaranteeFaq: [
+      "¿Cómo funciona la garantía?",
+      "Tienes 7 días de garantía. Solicita el reembolso siguiendo las instrucciones del correo de tu compra en Kiwify.",
+    ],
+  },
+  pt: {
+    heroTitle: "Menos telas.",
+    heroAccent: "Mais Bíblia, brincadeiras e tempo em família.",
+    heroIntro:
+      "3 livros e 5 jogos bíblicos em PDF para colorir, aprender e compartilhar. Escolha uma folha, imprima e comecem juntos.",
+    problemKicker: "UMA ALTERNATIVA PARA A ROTINA",
+    problemTitle: "O que fazer hoje longe das telas?",
+    problemText:
+      "Encontrar uma atividade que desperte o interesse nem sempre é fácil. E preparar tudo do zero leva tempo.",
+    problemSolution:
+      "Tenha letras, desenhos e jogos bíblicos prontos para escolher, imprimir e compartilhar.",
+    sampleNote: "Páginas reais dos três livros. Amplie para conferir o conteúdo antes de comprar.",
+    benefitsTitle: "Pensado para a vida em família.",
+    benefitsIntro:
+      "Uma proposta simples para transformar uma folha impressa em um momento compartilhado.",
+    benefits: [
+      ["Atividades prontas", "Abra o PDF e escolha uma atividade, sem precisar criá-la do zero."],
+      [
+        "Bíblia por meio da brincadeira",
+        "Relacione letras, desenhos, oração e valores com histórias e personagens bíblicos.",
+      ],
+      [
+        "Momentos para compartilhar",
+        "Acompanhe os pequenos enquanto pintam, conversam e brincam por turnos.",
+      ],
+      ["Impressão no seu ritmo", "Em casa ou numa gráfica. Prepare apenas as folhas que vão usar."],
+    ],
+    guaranteeFaq: [
+      "Como funciona a garantia?",
+      "Você tem 7 dias de garantia. Solicite o reembolso seguindo as instruções do e-mail da sua compra na Kiwify.",
+    ],
+  },
+  en: {
+    heroTitle: "Less screen time.",
+    heroAccent: "More Bible learning, play and family time.",
+    heroIntro:
+      "3 books and 5 printable Bible games to color, learn and share. Choose a page, print it and start together.",
+    problemKicker: "AN OPTION FOR YOUR EVERYDAY ROUTINE",
+    problemTitle: "What can we do today without screens?",
+    problemText:
+      "Finding an activity that holds their interest is not always easy. And preparing everything from scratch takes time.",
+    problemSolution: "Keep Bible letters, pictures and games ready to choose, print and share.",
+    sampleNote:
+      "Real pages from the three books. Enlarge them to review the content before buying.",
+    benefitsTitle: "Made for everyday family time.",
+    benefitsIntro: "A simple way to turn a printed page into a shared moment.",
+    benefits: [
+      [
+        "Ready-to-use activities",
+        "Open a PDF and choose an activity, without designing it from scratch.",
+      ],
+      [
+        "Bible learning through play",
+        "Connect letters, pictures, prayer and values with Bible stories and characters.",
+      ],
+      ["Moments to share", "Join children as they color, talk and take turns playing."],
+      [
+        "Print at your own pace",
+        "At home or at a print shop. Prepare just the pages you plan to use.",
+      ],
+    ],
+    guaranteeFaq: [
+      "How does the guarantee work?",
+      "You have a 7-day guarantee. Request a refund by following the instructions in your Kiwify purchase email.",
+    ],
+  },
+};

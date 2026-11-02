@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, BookOpen, Check, Download, Printer, ShieldCheck } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 import kit from "@/assets/kit-biblico-5-bonos.webp.asset.json";
-import childActivity from "@/assets/adan-actividad-en-casa.webp.asset.json";
+import alphabetSample from "@/assets/alfabeto-a.jpg.asset.json";
 import prayerSample from "@/assets/orar-sample.jpg.asset.json";
 import loveSample from "@/assets/amor-sample.jpg.asset.json";
 import { books, bonuses, deliverables } from "@/lib/kit-deliverables";
 import { imageProps } from "@/lib/responsive-images";
-import { kitCopy } from "@/lib/kit-copy";
+import { kitCopy, structureCopy } from "@/lib/kit-copy";
 import {
   BASE_PRICE,
   CHECKOUT,
@@ -21,7 +21,7 @@ import {
   type Market,
 } from "@/lib/kit-market";
 
-const samples = [childActivity, prayerSample, loveSample];
+const samples = [alphabetSample, prayerSample, loveSample];
 function readSaved(key: string) {
   try {
     return sessionStorage.getItem(key);
@@ -107,6 +107,7 @@ function useMarket() {
 export function KitPage() {
   const { market, language, chooseMarket, chooseLanguage, local, href } = useMarket();
   const t = kitCopy[language];
+  const c = structureCopy[language];
   const offerRef = useRef<HTMLElement>(null);
   const offerTracked = useRef(false);
   const [expanded, setExpanded] = useState<{ url: string; label: string } | null>(null);
@@ -171,34 +172,39 @@ export function KitPage() {
             <BookOpen aria-hidden="true" size={23} />
             <span>Kit Bíblico Infantil</span>
           </a>
-          <div className="latam-selectors">
-            <label>
-              <span>{t.country}</span>
-              <select
-                aria-label={t.country}
-                value={market[0]}
-                onChange={(e) => chooseMarket(e.target.value)}
-              >
-                {markets.map((m) => (
-                  <option key={m[0]} value={m[0]}>
-                    {m[1]} · {m[2]}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              <span>{t.language}</span>
-              <select
-                aria-label={t.language}
-                value={language}
-                onChange={(e) => chooseLanguage(e.target.value as Language)}
-              >
-                <option value="es">Español</option>
-                <option value="pt">Português</option>
-                <option value="en">English</option>
-              </select>
-            </label>
-          </div>
+          <details className="latam-market-menu">
+            <summary aria-label={`${t.country} / ${t.language}`}>
+              {market[0]} · {language.toUpperCase()} <span aria-hidden="true">⌄</span>
+            </summary>
+            <div className="latam-selectors">
+              <label>
+                <span>{t.country}</span>
+                <select
+                  aria-label={t.country}
+                  value={market[0]}
+                  onChange={(e) => chooseMarket(e.target.value)}
+                >
+                  {markets.map((m) => (
+                    <option key={m[0]} value={m[0]}>
+                      {m[1]} · {m[2]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>{t.language}</span>
+                <select
+                  aria-label={t.language}
+                  value={language}
+                  onChange={(e) => chooseLanguage(e.target.value as Language)}
+                >
+                  <option value="es">Español</option>
+                  <option value="pt">Português</option>
+                  <option value="en">English</option>
+                </select>
+              </label>
+            </div>
+          </details>
         </div>
       </header>
       <main>
@@ -207,11 +213,11 @@ export function KitPage() {
             <div className="latam-hero-copy">
               <p className="latam-eyebrow">{t.kicker}</p>
               <h1 id="kit-heading">
-                {t.title}
+                {c.heroTitle}
                 <br />
-                <em>{t.accent}</em>
+                <em>{c.heroAccent}</em>
               </h1>
-              <p className="latam-lead">{t.intro}</p>
+              <p className="latam-lead">{c.heroIntro}</p>
               <p className="latam-bundle">
                 <Check size={18} aria-hidden="true" />
                 {t.bundle}
@@ -249,6 +255,14 @@ export function KitPage() {
             })}
           </ul>
         </section>
+        <section className="latam-section latam-problem" aria-labelledby="problem-heading">
+          <div className="latam-container">
+            <p className="latam-eyebrow">{c.problemKicker}</p>
+            <h2 id="problem-heading">{c.problemTitle}</h2>
+            <p>{c.problemText}</p>
+            <strong>{c.problemSolution}</strong>
+          </div>
+        </section>
         <section
           className="latam-section latam-samples"
           id="actividades"
@@ -280,7 +294,7 @@ export function KitPage() {
                 </article>
               ))}
             </div>
-            <p className="latam-note">{t.sampleNote}</p>
+            <p className="latam-note">{c.sampleNote}</p>
             <div className="latam-mini-cta">{buy("samples")}</div>
           </div>
         </section>
@@ -324,29 +338,23 @@ export function KitPage() {
             <p className="latam-language-note">{t.note}</p>
           </div>
         </section>
-        <section className="latam-section latam-how" aria-labelledby="how-heading">
+        <section className="latam-section latam-benefits" aria-labelledby="benefits-heading">
           <div className="latam-container">
             <div className="latam-heading">
-              <h2 id="how-heading">{t.howTitle}</h2>
+              <h2 id="benefits-heading">{c.benefitsTitle}</h2>
+              <p>{c.benefitsIntro}</p>
             </div>
-            <ol className="latam-steps">
-              {t.steps.map(([title, text], i) => (
-                <li key={title}>
-                  <span>{i + 1}</span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="latam-note">{t.print}</p>
-          </div>
-        </section>
-        <section className="latam-section latam-guarantee" aria-labelledby="guarantee-heading">
-          <div className="latam-container latam-guarantee-inner">
-            <ShieldCheck size={60} aria-hidden="true" />
-            <div>
-              <h2 id="guarantee-heading">{t.guaranteeTitle}</h2>
-              <p>{t.guarantee}</p>
+            <div className="latam-benefit-grid">
+              {c.benefits.map(([title, text], i) => {
+                const Icon = [Download, BookOpen, ShieldCheck, Printer][i] || Check;
+                return (
+                  <article key={title}>
+                    <Icon size={25} aria-hidden="true" />
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -387,6 +395,13 @@ export function KitPage() {
               </p>
               <p className="latam-price-note">{local ? t.conversion : t.fallback}</p>
               <p className="latam-note">{t.format}</p>
+              <div className="latam-offer-guarantee">
+                <ShieldCheck size={24} aria-hidden="true" />
+                <div>
+                  <strong>{t.guaranteeTitle}</strong>
+                  <p>{t.guarantee}</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -395,12 +410,14 @@ export function KitPage() {
             <div className="latam-heading">
               <h2 id="faq-heading">{t.faqTitle}</h2>
             </div>
-            {t.faq.map(([q, a]) => (
-              <details key={q}>
-                <summary>{q}</summary>
-                <p>{a}</p>
-              </details>
-            ))}
+            {[t.faq[1]!, t.faq[4]!, t.faq[6]!, t.faq[3]!, c.guaranteeFaq, t.faq[5]!].map(
+              ([q, a]) => (
+                <details key={q}>
+                  <summary>{q}</summary>
+                  <p>{a}</p>
+                </details>
+              ),
+            )}
             <div className="latam-mini-cta">{buy("faq")}</div>
           </div>
         </section>

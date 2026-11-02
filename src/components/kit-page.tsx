@@ -1,163 +1,437 @@
-import { useEffect, useState } from 'react';
-import { BookOpen, Check, X, FileText, Printer, ShieldCheck, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import kit from '@/assets/kit-biblico-5-bonos.webp.asset.json';
-import pa from '@/assets/alfabeto-a.jpg.asset.json';
-import childActivity from '@/assets/adan-actividad-en-casa.webp.asset.json';
-import { BookPreview } from './book-preview';
-import { imageProps } from '@/lib/responsive-images';
-import prayerSample from '@/assets/orar-sample.jpg.asset.json';
-import loveSample from '@/assets/amor-sample.jpg.asset.json';
-import { books, deliverables } from '@/lib/kit-deliverables';
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, BookOpen, Check, Download, Printer, ShieldCheck } from "lucide-react";
+import * as Dialog from "@radix-ui/react-dialog";
+import kit from "@/assets/kit-biblico-5-bonos.webp.asset.json";
+import childActivity from "@/assets/adan-actividad-en-casa.webp.asset.json";
+import prayerSample from "@/assets/orar-sample.jpg.asset.json";
+import loveSample from "@/assets/amor-sample.jpg.asset.json";
+import { books, bonuses, deliverables } from "@/lib/kit-deliverables";
+import { imageProps } from "@/lib/responsive-images";
+import { kitCopy } from "@/lib/kit-copy";
+import {
+  BASE_PRICE,
+  CHECKOUT,
+  markets,
+  resolveMarket,
+  getMarket,
+  formatLocalPrice,
+  checkoutLink,
+  trackKit,
+  type Language,
+  type Market,
+} from "@/lib/kit-market";
 
-
-type Market = { country:string; label:string; currency:string; locale:string; language:'es'|'pt'|'en' };
-const MARKETS: Market[] = [
- {country:'MX',label:'México',currency:'MXN',locale:'es-MX',language:'es'},
- {country:'CO',label:'Colombia',currency:'COP',locale:'es-CO',language:'es'},
- {country:'CL',label:'Chile',currency:'CLP',locale:'es-CL',language:'es'},
- {country:'PE',label:'Perú',currency:'PEN',locale:'es-PE',language:'es'},
- {country:'AR',label:'Argentina',currency:'ARS',locale:'es-AR',language:'es'},
- {country:'EC',label:'Ecuador',currency:'USD',locale:'es-EC',language:'es'},
- {country:'BO',label:'Bolivia',currency:'BOB',locale:'es-BO',language:'es'},
- {country:'UY',label:'Uruguay',currency:'UYU',locale:'es-UY',language:'es'},
- {country:'PY',label:'Paraguay',currency:'PYG',locale:'es-PY',language:'es'},
- {country:'GT',label:'Guatemala',currency:'GTQ',locale:'es-GT',language:'es'},
- {country:'CR',label:'Costa Rica',currency:'CRC',locale:'es-CR',language:'es'},
- {country:'DO',label:'República Dominicana',currency:'DOP',locale:'es-DO',language:'es'},
- {country:'BR',label:'Brasil',currency:'BRL',locale:'pt-BR',language:'pt'},
- {country:'US',label:'Estados Unidos',currency:'USD',locale:'en-US',language:'en'},
- {country:'ES',label:'España',currency:'EUR',locale:'es-ES',language:'es'},
-];
-const DEFAULT_MARKET = MARKETS[0];
-type LocaleText = { headlineStart:string; headlineEmphasis:string; headlineEnd:string; intro:string; mainBooks:string; bonusGames:string; digitalDownload:string; priceTop:string; location:string; select:string; estimate:string; checkout:string; original:string; buy:string; short:string; only:string; currencyDisclaimer:string };
-const LOCALES: Record<Market['language'],LocaleText> = {
- es:{headlineStart:'¡Menos pantallas!',headlineEmphasis:'Letras, colores y fe',headlineEnd:'en familia.',intro:'Actividades bíblicas para practicar letras, colorear y jugar juntos. 3 libros y 5 juegos en PDF, en español.',mainBooks:'3 libros ilustrados',bonusGames:'5 juegos incluidos',digitalDownload:'Descarga digital',priceTop:'HOY, LA COLECCIÓN COMPLETA POR',location:'Tu país',select:'Selecciona tu país',estimate:'Precio estimado en tu moneda',checkout:'Ver precio final y pagar',original:'Precio base',buy:'¡QUIERO MI KIT COMPLETO!',short:'Pago único · PDF digital',only:'Todo el kit por solo',currencyDisclaimer:'Conversión de referencia. El importe y la moneda finales los confirma Kiwify antes del pago.'},
- pt:{headlineStart:'Menos telas!',headlineEmphasis:'Letras, cores e fé',headlineEnd:'em família.',intro:'Atividades bíblicas para praticar letras, colorir e brincar juntos. 3 livros e 5 jogos em PDF, em espanhol.',mainBooks:'3 livros ilustrados',bonusGames:'5 jogos incluídos',digitalDownload:'Download digital',priceTop:'KIT COMPLETO POR APENAS',location:'Seu país',select:'Selecione seu país',estimate:'Preço estimado na sua moeda',checkout:'Ver preço final e pagar',original:'Preço base',buy:'QUERO MEU KIT COMPLETO!',short:'Pagamento único · PDF digital',only:'Kit completo por apenas',currencyDisclaimer:'Conversão apenas informativa. A Kiwify confirma o valor e a moeda finais antes do pagamento. Os PDFs estão principalmente em espanhol.'},
- en:{headlineStart:'Less screen time!',headlineEmphasis:'Letters, colors and faith',headlineEnd:'as a family.',intro:'Bible activities to practice letters, color and play together. 3 books and 5 printable games. PDFs in Spanish.',mainBooks:'3 illustrated books',bonusGames:'5 bonus games',digitalDownload:'Digital download',priceTop:'THE COMPLETE KIT FOR',location:'Your country',select:'Select your country',estimate:'Estimated price in your currency',checkout:'See final checkout price',original:'Base price',buy:'GET MY COMPLETE KIT!',short:'One-time payment · Digital PDFs',only:'Complete kit for',currencyDisclaimer:'Estimated conversion only. Kiwify confirms the final amount and currency before payment. PDFs are primarily in Spanish.'},
-};
-function formatMoney(value:number, market:Market) {
- // Show unambiguous ISO currency codes in every market, with no fractional
- // units for high-denomination currencies (including ARS).
- const zeroDecimals=['ARS','CLP','COP','PYG','CRC','UYU'];
- const digits=zeroDecimals.includes(market.currency)?0:2;
- try {
-  const amount=new Intl.NumberFormat(market.locale,{minimumFractionDigits:digits,maximumFractionDigits:digits}).format(value);
-  return market.currency+' '+amount;
- }catch{return market.currency+' '+value.toFixed(digits);}
+const samples = [childActivity, prayerSample, loveSample];
+function readSaved(key: string) {
+  try {
+    return sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
 }
-function useLocalPricing() {
- const [market,setMarket] = useState<Market>(DEFAULT_MARKET);
- const [rate,setRate] = useState<number|null>(null);
- useEffect(()=>{
-  let active=true;
-  // Manual selection is only retained for this tab session; old persistent choices
-  // must not override a visitor's actual country on subsequent visits.
-  const manual=window.sessionStorage.getItem('kit-market-manual');
-  const selected=MARKETS.find(m=>m.country===manual);
-  if(selected){setMarket(selected);return()=>{active=false};}
-  window.localStorage.removeItem('kit-market');
-  const browserLang=navigator.language?.toLowerCase()||'';
-  const inferred=MARKETS.find(m=>browserLang.endsWith('-'+m.country.toLowerCase()));
-  if(inferred)setMarket(inferred);
-  const detect=async()=>{
-   // Independent public geo services; avoid dependence on a single provider.
-   for(const url of ['https://ipwho.is/','https://ipapi.co/json/']){
-    try{
-     const response=await fetch(url,{signal:AbortSignal.timeout(4500),cache:'no-store'});
-     if(!response.ok)continue;
-     const data=await response.json();
-     const country=String(data?.country_code||data?.country||'').toUpperCase();
-     const found=MARKETS.find(m=>m.country===country);
-     if(active&&found&&!window.sessionStorage.getItem('kit-market-manual')){setMarket(found);return;}
-    }catch{/* retry with next provider */}
-   }
+function save(key: string, value: string) {
+  try {
+    sessionStorage.setItem(key, value);
+  } catch {
+    /* Storage is optional. */
+  }
+}
+function useMarket() {
+  const [market, setMarket] = useState<Market>(markets[0]);
+  const [language, setLanguage] = useState<Language>("es");
+  const [rates, setRates] = useState<Record<string, number>>({ USD: 1 });
+  const [href, setHref] = useState(CHECKOUT);
+  useEffect(() => {
+    setMarket(resolveMarket(location.search, readSaved("kit-country-v2"), navigator.language));
+    const lang = new URLSearchParams(location.search).get("lang") || readSaved("kit-language-v2");
+    if (lang === "es" || lang === "pt" || lang === "en") setLanguage(lang);
+    setHref(checkoutLink(location.search));
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    let active = true;
+    const load = async () => {
+      try {
+        const saved = JSON.parse(readSaved("kit-fx-v2") || "null");
+        if (saved?.at > Date.now() - 3600000 && saved.rates) {
+          setRates(saved.rates);
+          return;
+        }
+        const response = await fetch("https://open.er-api.com/v6/latest/USD", {
+          signal: controller.signal,
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        if (active && data.result === "success" && data.rates) {
+          const valid: Record<string, number> = { USD: 1 };
+          for (const [, , currency] of markets) {
+            const rate = Number(data.rates[currency]);
+            if (Number.isFinite(rate) && rate > 0) valid[currency] = rate;
+          }
+          setRates(valid);
+          save("kit-fx-v2", JSON.stringify({ at: Date.now(), rates: valid }));
+        }
+      } catch {
+        /* USD remains usable if exchange rates fail. */
+      } finally {
+        clearTimeout(timeout);
+      }
+    };
+    void load();
+    return () => {
+      active = false;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, []);
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+  const chooseMarket = (country: string) => {
+    const next = getMarket(country);
+    if (!next) return;
+    setMarket(next);
+    save("kit-country-v2", country);
+    trackKit("kit_market_change", { country, language });
   };
-  void detect();
-  return()=>{active=false};
- },[]);
- useEffect(()=>{
-  let active=true;setRate(null);
-  if(market.currency==='USD'){setRate(1);return;}
-  fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(6000)})
-   .then(r=>r.ok?r.json():null).then(data=>{const n=Number(data?.rates?.[market.currency]);if(active&&data?.result==='success'&&Number.isFinite(n)&&n>0)setRate(n);}).catch(()=>{});
-  return()=>{active=false};
- },[market.currency]);
- const choose=(code:string)=>{const next=MARKETS.find(m=>m.country===code);if(next){setMarket(next);window.sessionStorage.setItem('kit-market-manual',code);}};
- const locale=LOCALES[market.language];
- const price=(usd:number)=>market.currency==='USD'?'USD '+usd.toFixed(2):rate?formatMoney(usd*rate,market):'USD '+usd.toFixed(2);
- const converted=market.currency==='USD'||rate!==null;
- return {market,choose,locale,price,converted};
+  const chooseLanguage = (lang: Language) => {
+    setLanguage(lang);
+    save("kit-language-v2", lang);
+  };
+  const rate = Number(rates[market[2]]);
+  const local =
+    market[2] !== "USD" && Number.isFinite(rate) && rate > 0
+      ? formatLocalPrice(rate, market)
+      : null;
+  return { market, language, chooseMarket, chooseLanguage, local, href };
 }
-function MarketSwitcher({market,choose,locale}:{market:Market;choose:(code:string)=>void;locale:LocaleText}) {
- return <div className="market-switcher"><label htmlFor="kit-market">{locale.location}</label><select id="kit-market" value={market.country} onChange={e=>choose(e.target.value)} aria-label={locale.select}>{MARKETS.map(m=><option value={m.country} key={m.country}>{m.label} · {m.currency}</option>)}</select></div>;
-}
-function LocalPrice({usd,price}:{usd:number;price:(usd:number)=>string}){return <>{price(usd)}</>;}
-
-const checkout = 'https://pay.kiwify.com/n3l7mr7';
-function Buy({children, yellow = false, small = false, className = ''}: {children: React.ReactNode; yellow?: boolean; small?: boolean; className?: string}) {
- return <Button asChild className={`cta ${yellow ? 'cta-yellow' : ''} ${small ? 'cta-small' : ''} ${className}`}><a href={checkout}>{children}</a></Button>;
-}
-function Checks({items, className = ''}: {items: string[]; className?: string}) { return <ul className={`check-list ${className}`}>{items.map(item => <li key={item}><Check aria-hidden="true"/>{item}</li>)}</ul>; }
-const activitySamples = [
- {image:childActivity, label:'Practicar letras y colorear', detail:'Letra A — Adán · Alfabeto Bíblico'},
- {image:prayerSample, label:'Descubrir la oración', detail:'Mi oración para Dios · Aprendiendo a Orar'},
- {image:loveSample, label:'Aprender sobre el amor de Dios', detail:'Actitudes correctas · El Amor de Dios'},
-];
-const bookExamples = [pa, prayerSample, loveSample];
-const bookSummaries = [
- '26 letras de la A a la Z: personajes bíblicos, trazado y dibujos para colorear.',
- 'Padre Nuestro, pedidos y agradecimientos, actividades de oración y pasatiempos.',
- 'Amor, perdón, gratitud y amistad: colorear, completar y elegir actitudes.',
-];
-const steps = [
- ['Compra el kit','Realiza un único pago e introduce el correo electrónico donde quieres recibir el acceso.'],
- ['Revisa tu correo y descarga','Cuando se confirme el pago, busca el correo de Kiwify y abre el enlace de acceso al producto para descargar tus PDFs.'],
- ['Imprime lo que quieras usar','En casa o en una imprenta, a color o en blanco y negro. Elige solo las hojas de ese día.'],
-];
-const faqs = [
- ['¿El kit es físico o digital?','Es digital. Incluye 3 libros y 5 bonos en PDF para descargar e imprimir. La impresión no está incluida. '],
- ['¿Para qué edades está recomendado?','Alfabeto Bíblico indica de 3 a 10 años en su portada; Aprendiendo a Orar, de 4 a 10 años. Elige las actividades según la etapa del niño y acompáñalo en la lectura y la escritura.'],
- ['¿Cómo recibo los materiales?','Cuando se confirme el pago, revisa el correo electrónico que usaste en la compra. Busca el mensaje de Kiwify y abre el enlace de acceso al producto para descargar los PDFs. Si no lo encuentras, revisa Spam o Promociones. Puedes consultar el contacto de soporte del vendedor en el correo de confirmación de la compra.'],
- ['¿Necesito una impresora?','Puedes imprimir en casa o en un servicio de impresión. Algunas actividades también requieren colores, tijeras u otros materiales básicos.'],
- ['¿Gasta mucha tinta?','No, las actividades están diseñadas para funcionar perfectamente tanto a color como en blanco y negro, e imprimes solo las hojas que quieras hacer ese día.'],
- ['¿Es un pago único?','Sí. El precio base es US$ 7.90, sin mensualidad. La moneda y el importe final se muestran en Kiwify antes de pagar.'],
- ['¿En qué idioma están los materiales?','Los 3 libros y los 5 bonos están preparados en español para familias de Latinoamérica. Puedes ver ejemplos de las actividades antes de comprar.'],
- ['¿Puedo usarlo con grupos?','Consulta las condiciones de uso del producto para conocer los permisos de impresión y utilización con grupos o instituciones.'],
- ['¿Cómo funciona la garantía de 7 días?','Tienes una garantía incondicional de 7 días. Si el material no cumple tus expectativas, te devolvemos el 100% de tu dinero sin preguntas. Solicita el reembolso siguiendo las instrucciones de tu compra en Kiwify.'],
-];
 export function KitPage() {
- const {market,choose,locale,price}=useLocalPricing();
- const [activeActivity,setActiveActivity] = useState(0);
- const [expanded,setExpanded] = useState<{url:string; label:string} | null>(null);
- useEffect(()=> { if(!expanded) return; const previous=document.body.style.overflow; document.body.style.overflow='hidden'; const key=(e:KeyboardEvent)=>{if(e.key==='Escape')setExpanded(null);}; window.addEventListener('keydown',key); return ()=>{document.body.style.overflow=previous;window.removeEventListener('keydown',key);}; },[expanded]);
- return <div className="page conversion-page">
- <header className="page-header"><div className="container header-inner"><div className="brand"><span className="brand-icon"><BookOpen size={21}/></span>Kit Bíblico Infantil</div><div hidden><MarketSwitcher market={market} choose={choose} locale={locale}/></div></div></header>
- <main>
- <section className="hero" aria-labelledby="kit-heading"><div className="container hero-grid"><div className="hero-copy">
- <span className="hero-kicker"><Sparkles size={15} aria-hidden="true"/> ACTIVIDADES BÍBLICAS · 3 A 10 AÑOS</span>
- <h1 id="kit-heading">{locale.headlineStart}<br/><span>{locale.headlineEmphasis}</span> {locale.headlineEnd}</h1>
- <p className="hero-lead">{locale.intro}</p>
- <div className="mobile-hero-mockup"><p className="format-label"><FileText size={15} aria-hidden="true"/> PDF digital para descargar e imprimir</p><img {...imageProps(kit.url, '(max-width: 767px) calc(100vw - 48px), 570px')} alt="Kit digital: tres libros y cinco juegos para imprimir" width="1448" height="1086" fetchPriority="high"/></div>
- <div className="hero-proof"><span>3 libros ilustrados</span><span>5 juegos incluidos</span><span>En español</span></div>
- <div className="hero-discovery"><Button asChild className="cta cta-yellow"><a href="#oferta">{market.language==='pt'?'CONHECER O KIT COMPLETO':market.language==='en'?'EXPLORE THE COMPLETE KIT':'CONOCE EL KIT COMPLETO'} <span aria-hidden="true">↓</span></a></Button><p className="hero-discovery-note">PDFs en español · Descarga e imprime a tu ritmo</p><div className="purchase-assurance"><span><ShieldCheck size={16} aria-hidden="true"/> Garantía de 7 días · 100% de devolución</span></div></div>
- </div><div className="hero-visual"><p className="format-label"><FileText size={17} aria-hidden="true"/> PDF digital para descargar e imprimir</p><img className="product-image" {...imageProps(kit.url, '(max-width: 767px) calc(100vw - 48px), 570px')} alt="Colección digital de tres libros y cinco juegos bíblicos" width="1448" height="1086" fetchPriority="high"/><span className="digital-label">8 materiales digitales · No se envían libros físicos</span></div></div></section>
-
- <section className="section activity-section" id="actividades" aria-labelledby="activity-heading"><div className="container"><div className="section-heading"><span className="eyebrow">ASÍ SON LOS MATERIALES POR DENTRO</span><h2 id="activity-heading">Elige una hoja. Preparen los colores. Empiecen juntos.</h2><p>Explora las actividades y mira el Alfabeto Bíblico en movimiento. Toca las imágenes para ampliarlas.</p></div><div className="activity-grid" id="activity-samples">{activitySamples.map((sample,index)=><article className="activity-card" data-active={index===activeActivity} key={sample.label}><button type="button" className="activity-preview" aria-label={`Ampliar ${sample.detail}`} onClick={()=>setExpanded({url:sample.image.url,label:sample.detail})}><img {...imageProps(sample.image.url, '(max-width: 767px) 304px, 230px')} alt={sample.detail} loading="lazy"/><span>Ampliar actividad</span></button><div><span className="activity-number">0{index+1}</span><h3>{sample.label}</h3><p>{sample.detail}</p></div></article>)}</div><nav className="activity-navigation" aria-label="Elegir una actividad de muestra"><button type="button" aria-controls="activity-samples" disabled={activeActivity===0} onClick={()=>setActiveActivity(index=>Math.max(0,index-1))}>← Anterior</button><span role="status" aria-live="polite" aria-atomic="true">{activeActivity+1} de {activitySamples.length}</span><button type="button" aria-controls="activity-samples" disabled={activeActivity===activitySamples.length-1} onClick={()=>setActiveActivity(index=>Math.min(activitySamples.length-1,index+1))}>Siguiente →</button></nav><div className="inline-book-demo" aria-labelledby="inline-demo-heading"><div className="inline-demo-copy"><span className="eyebrow">UNA MIRADA AL INTERIOR</span><h3 id="inline-demo-heading">Mira el Alfabeto Bíblico por dentro.</h3><p>Páginas para descubrir personajes bíblicos, practicar letras y colorear.</p><span className="inline-demo-note">Vista previa de 4 segundos · Sin sonido</span></div><BookPreview/></div></div></section>
-
- <section className="section stack-section" id="libros" aria-labelledby="books-heading"><div className="container"><div className="section-heading"><span className="eyebrow">LOS 3 LIBROS DEL KIT</span><h2 id="books-heading">Tres libros para aprender, orar y compartir en familia.</h2><p>69 páginas entre los tres libros, además de los cinco juegos y actividades adicionales.</p></div><div className="stack-grid">{books.map((book,index)=><article className="stack-book" key={book.name}><div className="stack-cover"><img {...imageProps(book.image.url, '(max-width: 767px) 76px, 92px')} alt={`Portada de ${book.name}`} loading="lazy"/></div><div className="stack-info"><span className="stack-pages">{book.pages} páginas · PDF imprimible</span><h3>{book.name}</h3><p>{bookSummaries[index]}</p><div className="book-value"><span>Valor individual sugerido*</span><strong><LocalPrice usd={book.suggestedValue} price={price}/></strong><small>Incluido en tu kit</small></div><button type="button" className="text-preview" onClick={()=>setExpanded({url:bookExamples[index].url,label:`Actividad de ${book.name}`})}>Ver una actividad <span aria-hidden="true">↗</span></button></div></article>)}</div><p className="book-value-note">*Valores individuales sugeridos como referencia; no son precios anteriores ni descuentos históricos verificados.</p></div></section>
-
- <section className="section compact-bonuses bg-cream" id="bonos" aria-labelledby="bonuses-heading"><div className="container"><div className="section-heading"><span className="eyebrow">INCLUIDOS CON TU COLECCIÓN</span><h2 id="bonuses-heading">5 bonos para seguir jugando.</h2><p>Cartones, fichas, retos y actividades para compartir. Toca las portadas para ampliarlas.</p></div><div className="bonus-grid">{deliverables.slice(3).map(bonus=><article className="bonus-card" key={bonus.name}><button type="button" className="bonus-preview" aria-label={`Ampliar portada de ${bonus.name}`} onClick={()=>setExpanded({url:bonus.image.url,label:`Portada de ${bonus.name}`})}><img {...imageProps(bonus.image.url, '(max-width: 767px) 94px, 128px')} alt={`Portada de ${bonus.name}`} loading="lazy"/><span>Ampliar portada</span></button><div className="bonus-body"><h3>{bonus.name}</h3><p>{bonus.text}</p></div></article>)}</div></div></section>
-
- <section className="section receiving-section" id="como-recibes" aria-labelledby="receiving-heading"><div className="container"><div className="section-heading"><h2 id="receiving-heading">Compra una vez. Descarga. Imprime a tu ritmo.</h2><p>Material digital en español. La impresión y los materiales de papelería no están incluidos.</p></div><div className="steps-grid">{steps.map(([title,text],index)=><article className="item-card" key={title}><span className="step-number">{index+1}</span><h3>{title}</h3><p>{text}</p></article>)}</div><p className="print-note"><Printer size={18} aria-hidden="true"/> No necesitas imprimir todo: prepara solo la actividad que van a usar.</p></div></section>
-
- <section className="section guarantee-section" aria-labelledby="guarantee-heading"><div className="container"><div className="guarantee-panel"><div className="guarantee-seal" aria-label="Garantía de 7 días"><ShieldCheck size={38} aria-hidden="true"/><strong>7 DÍAS</strong><span>DE GARANTÍA</span></div><div className="guarantee-copy"><span className="eyebrow">COMPRA CON TRANQUILIDAD</span><h2 id="guarantee-heading">Garantía incondicional de 7 días.</h2><p>Si el material no cumple tus expectativas, te devolvemos el <strong>100% de tu dinero sin preguntas</strong>.</p><p className="guarantee-help">Solicita el reembolso siguiendo las instrucciones de tu compra en Kiwify.</p></div></div></div></section>
-
- <section className="section offer final-offer" id="oferta" aria-labelledby="offer-heading"><div className="container"><div className="offer-panel final-offer-panel"><div className="final-offer-top"><span className="final-offer-badge"><Sparkles size={15} aria-hidden="true"/> OFERTA DEL KIT COMPLETO</span><h2 id="offer-heading">3 libros + 5 juegos.<br/><span>Una nueva actividad para compartir.</span></h2></div><div className="final-offer-grid"><div className="final-offer-content"><div className="final-offer-visual"><img {...imageProps(kit.url, '(max-width: 767px) calc(100vw - 48px), 570px')} className="offer-image" alt="Kit digital con tres libros y cinco bonos para imprimir" width="1448" height="1086" loading="lazy"/></div><Checks className="final-inventory" items={deliverables.map(item=>item.name)}/></div><div className="final-offer-checkout"><p className="format-label">PDF digital para descargar e imprimir</p><div className="final-reference"><span>Valor individual sugerido de los 3 libros:</span><strong><LocalPrice usd={15.70} price={price}/><sup>*</sup></strong></div><div className="final-price-box"><span className="offer-condition">Pero solo en esta oferta</span><span className="offer-complete-label">La colección completa por solo</span><div className="final-price localized-price"><strong><LocalPrice usd={7.90} price={price}/></strong></div><span className="final-payment">UN SOLO PAGO · SIN MENSUALIDADES</span></div><Buy yellow className="final-buy">¡QUIERO MI KIT DIGITAL COMPLETO! →</Buy><div className="purchase-assurance"><span><ShieldCheck size={16} aria-hidden="true"/> Garantía de 7 días · 100% de devolución</span><span><FileText size={16} aria-hidden="true"/> Descarga tras confirmar el pago</span></div><p className="final-fine">PDFs en español. Imprime en casa o en una imprenta.<br/>No se envían productos físicos.</p><p className="currency-disclaimer">{LOCALES.es.currencyDisclaimer}</p></div></div><p className="final-value-note">*Valores individuales sugeridos; no son precios anteriores ni descuentos históricos verificados.</p></div></div></section>
-
- <section className="section faq-section" aria-labelledby="faq-heading"><div className="container"><div className="section-heading"><h2 id="faq-heading">¿Tienes alguna duda?</h2></div><div className="faq-list">{faqs.map(([question,answer])=><details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div><div className="center-cta"><Buy yellow>¡QUIERO EMPEZAR CON MI KIT!</Buy></div></div></section>
- </main><footer className="footer"><strong>Kit Bíblico Infantil — 3 libros + 5 juegos.</strong><p>PDFs en español para descargar e imprimir.</p></footer>
-
- {expanded && <div className="lightbox" role="dialog" aria-modal="true" aria-label={expanded.label} onClick={()=>setExpanded(null)}><Button autoFocus size="icon" variant="ghost" className="lightbox-close" aria-label="Cerrar imagen" onClick={()=>setExpanded(null)}><X/></Button><img src={expanded.url} alt={expanded.label} onClick={event=>event.stopPropagation()}/></div>}
- </div>;
+  const { market, language, chooseMarket, chooseLanguage, local, href } = useMarket();
+  const t = kitCopy[language];
+  const offerRef = useRef<HTMLElement>(null);
+  const offerTracked = useRef(false);
+  const [expanded, setExpanded] = useState<{ url: string; label: string } | null>(null);
+  useEffect(() => {
+    const offer = offerRef.current;
+    if (!offer || offerTracked.current || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          offerTracked.current = true;
+          trackKit("kit_offer_view", { country: market[0], language });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(offer);
+    return () => observer.disconnect();
+  }, [market, language]);
+  const buy = (placement: string, compact = false) => (
+    <a
+      className={`latam-buy ${compact ? "latam-buy-compact" : ""}`}
+      href={href}
+      data-placement={placement}
+      onClick={() => trackKit("kit_checkout_click", { placement, country: market[0], language })}
+    >
+      {compact ? t.sticky : t.buy}
+      <ArrowRight size={19} aria-hidden="true" />
+    </a>
+  );
+  const price = () => (
+    <div className="latam-price">
+      {local ? (
+        <>
+          <span>{t.estimate}</span>
+          <strong>≈ {local}</strong>
+          <small>
+            {t.base}: US$ {BASE_PRICE.toFixed(2)}
+          </small>
+        </>
+      ) : (
+        <>
+          <span>{t.total}</span>
+          <strong>US$ {BASE_PRICE.toFixed(2)}</strong>
+        </>
+      )}
+      <small>{t.single}</small>
+    </div>
+  );
+  const openSample = (i: number) => {
+    const sample = samples[i];
+    const label = t.sampleLabels[i];
+    if (!sample || !label) return;
+    setExpanded({ url: sample.url, label });
+    trackKit("kit_sample_open", { sample: i + 1, country: market[0], language });
+  };
+  return (
+    <div className="page latam-page">
+      <header className="latam-header">
+        <div className="latam-container latam-header-inner">
+          <a className="latam-brand" href="#inicio">
+            <BookOpen aria-hidden="true" size={23} />
+            <span>Kit Bíblico Infantil</span>
+          </a>
+          <div className="latam-selectors">
+            <label>
+              <span>{t.country}</span>
+              <select
+                aria-label={t.country}
+                value={market[0]}
+                onChange={(e) => chooseMarket(e.target.value)}
+              >
+                {markets.map((m) => (
+                  <option key={m[0]} value={m[0]}>
+                    {m[1]} · {m[2]}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span>{t.language}</span>
+              <select
+                aria-label={t.language}
+                value={language}
+                onChange={(e) => chooseLanguage(e.target.value as Language)}
+              >
+                <option value="es">Español</option>
+                <option value="pt">Português</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </header>
+      <main>
+        <section className="latam-hero" id="inicio" aria-labelledby="kit-heading">
+          <div className="latam-container latam-hero-grid">
+            <div className="latam-hero-copy">
+              <p className="latam-eyebrow">{t.kicker}</p>
+              <h1 id="kit-heading">
+                {t.title}
+                <br />
+                <em>{t.accent}</em>
+              </h1>
+              <p className="latam-lead">{t.intro}</p>
+              <p className="latam-bundle">
+                <Check size={18} aria-hidden="true" />
+                {t.bundle}
+              </p>
+            </div>
+            <figure className="latam-hero-art">
+              <img
+                {...imageProps(kit.url, "(max-width: 767px) calc(100vw - 32px), 570px")}
+                alt={t.bundle}
+                width="1448"
+                height="1086"
+                fetchPriority="high"
+              />
+              <figcaption>{t.included}</figcaption>
+            </figure>
+            <div className="latam-hero-purchase">
+              {price()}
+              {buy("hero")}
+              <a className="latam-secondary" href="#actividades">
+                {t.see} ↓
+              </a>
+              <p className="latam-price-note">{local ? t.conversion : t.fallback}</p>
+              <p className="latam-format">{t.format}</p>
+            </div>
+          </div>
+          <ul className="latam-container latam-trust">
+            {t.trust.map((text, i) => {
+              const Icon = [Download, ShieldCheck, Printer][i] || Check;
+              return (
+                <li key={text}>
+                  <Icon size={20} aria-hidden="true" />
+                  {text}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+        <section
+          className="latam-section latam-samples"
+          id="actividades"
+          aria-labelledby="samples-heading"
+        >
+          <div className="latam-container">
+            <div className="latam-heading">
+              <p className="latam-eyebrow">{t.sampleKicker}</p>
+              <h2 id="samples-heading">{t.sampleTitle}</h2>
+              <p>{t.sampleIntro}</p>
+            </div>
+            <div className="latam-sample-grid">
+              {samples.map((sample, i) => (
+                <article key={sample.url}>
+                  <button
+                    className="latam-sample-button"
+                    type="button"
+                    aria-label={`${t.expand}: ${t.sampleLabels[i]}`}
+                    onClick={() => openSample(i)}
+                  >
+                    <img
+                      {...imageProps(sample.url, "(max-width: 767px) 75vw, 320px")}
+                      alt={t.sampleLabels[i]}
+                      loading="lazy"
+                    />
+                    <span>{t.expand} ↗</span>
+                  </button>
+                  <h3>{t.sampleLabels[i]}</h3>
+                </article>
+              ))}
+            </div>
+            <p className="latam-note">{t.sampleNote}</p>
+            <div className="latam-mini-cta">{buy("samples")}</div>
+          </div>
+        </section>
+        <section className="latam-section" aria-labelledby="books-heading">
+          <div className="latam-container">
+            <div className="latam-heading">
+              <p className="latam-eyebrow">{t.booksKicker}</p>
+              <h2 id="books-heading">{t.booksTitle}</h2>
+              <p>{t.booksIntro}</p>
+            </div>
+            <div className="latam-book-grid">
+              {books.map((book, i) => (
+                <article className="latam-book" key={book.name}>
+                  <img
+                    {...imageProps(book.image.url, "(max-width: 767px) 100px, 160px")}
+                    alt={book.name}
+                    loading="lazy"
+                  />
+                  <div>
+                    <span className="latam-tag">
+                      {book.pages} {t.pages} · PDF
+                    </span>
+                    <h3>{book.name}</h3>
+                    <p>{t.bookText[i]}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="latam-bonus-heading">
+              <h2>{t.bonusTitle}</h2>
+            </div>
+            <div className="latam-bonus-grid">
+              {bonuses.map((bonus, i) => (
+                <article key={bonus.name}>
+                  <img {...imageProps(bonus.image.url, "120px")} alt={bonus.name} loading="lazy" />
+                  <h3>{bonus.name}</h3>
+                  <p>{t.bonusText[i]}</p>
+                </article>
+              ))}
+            </div>
+            <p className="latam-language-note">{t.note}</p>
+          </div>
+        </section>
+        <section className="latam-section latam-how" aria-labelledby="how-heading">
+          <div className="latam-container">
+            <div className="latam-heading">
+              <h2 id="how-heading">{t.howTitle}</h2>
+            </div>
+            <ol className="latam-steps">
+              {t.steps.map(([title, text], i) => (
+                <li key={title}>
+                  <span>{i + 1}</span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="latam-note">{t.print}</p>
+          </div>
+        </section>
+        <section className="latam-section latam-guarantee" aria-labelledby="guarantee-heading">
+          <div className="latam-container latam-guarantee-inner">
+            <ShieldCheck size={60} aria-hidden="true" />
+            <div>
+              <h2 id="guarantee-heading">{t.guaranteeTitle}</h2>
+              <p>{t.guarantee}</p>
+            </div>
+          </div>
+        </section>
+        <section
+          ref={offerRef}
+          className="latam-section latam-offer"
+          id="oferta"
+          aria-labelledby="offer-heading"
+        >
+          <div className="latam-container latam-offer-panel">
+            <div className="latam-offer-copy">
+              <p className="latam-eyebrow">{t.offerKicker}</p>
+              <h2 id="offer-heading">{t.offerTitle}</h2>
+              <p>{t.offerIntro}</p>
+              <img
+                {...imageProps(kit.url, "(max-width: 767px) calc(100vw - 64px), 480px")}
+                alt={t.bundle}
+                loading="lazy"
+                width="1448"
+                height="1086"
+              />
+            </div>
+            <div className="latam-order">
+              <h3>{t.bundle}</h3>
+              <ul>
+                {deliverables.map((item) => (
+                  <li key={item.name}>
+                    <Check size={16} aria-hidden="true" />
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+              {price()}
+              {buy("offer")}
+              <p className="latam-checkout">
+                <ShieldCheck size={16} aria-hidden="true" />
+                {t.checkout}
+              </p>
+              <p className="latam-price-note">{local ? t.conversion : t.fallback}</p>
+              <p className="latam-note">{t.format}</p>
+            </div>
+          </div>
+        </section>
+        <section className="latam-section" aria-labelledby="faq-heading">
+          <div className="latam-container latam-faq">
+            <div className="latam-heading">
+              <h2 id="faq-heading">{t.faqTitle}</h2>
+            </div>
+            {t.faq.map(([q, a]) => (
+              <details key={q}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
+            <div className="latam-mini-cta">{buy("faq")}</div>
+          </div>
+        </section>
+      </main>
+      <footer className="latam-footer">
+        <p>{t.footer}</p>
+        <p>{t.note}</p>
+        <p>{t.checkout}</p>
+      </footer>
+      <aside className="latam-sticky" aria-label={t.sticky}>
+        <div>
+          <span>{t.single}</span>
+          <strong>{local ? `≈ ${local}` : "US$ 7.90"}</strong>
+        </div>
+        {buy("sticky", true)}
+      </aside>
+      <Dialog.Root
+        open={!!expanded}
+        onOpenChange={(open) => {
+          if (!open) setExpanded(null);
+        }}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay className="latam-dialog-overlay" />
+          <Dialog.Content className="latam-dialog" aria-describedby={undefined}>
+            <Dialog.Title>{expanded?.label}</Dialog.Title>
+            <Dialog.Close className="latam-dialog-close">{t.close} ×</Dialog.Close>
+            {expanded && <img src={expanded.url} alt={expanded.label} />}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </div>
+  );
 }

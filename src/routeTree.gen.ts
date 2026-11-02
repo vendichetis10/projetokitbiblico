@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BibliotecaBiblicaRouteImport } from './routes/biblioteca-biblica'
 import { Route as KitBiblicoRouteImport } from './routes/kit-biblico'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliotecaBiblicaRoute = BibliotecaBiblicaRouteImport.update({
+  id: '/biblioteca-biblica',
+  path: '/biblioteca-biblica',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KitBiblicoRoute = KitBiblicoRouteImport.update({
@@ -25,27 +31,31 @@ const KitBiblicoRoute = KitBiblicoRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/biblioteca-biblica': typeof BibliotecaBiblicaRoute
   '/kit-biblico': typeof KitBiblicoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/biblioteca-biblica': typeof BibliotecaBiblicaRoute
   '/kit-biblico': typeof KitBiblicoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/biblioteca-biblica': typeof BibliotecaBiblicaRoute
   '/kit-biblico': typeof KitBiblicoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kit-biblico'
+  fullPaths: '/' | '/biblioteca-biblica' | '/kit-biblico'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kit-biblico'
-  id: '__root__' | '/' | '/kit-biblico'
+  to: '/' | '/biblioteca-biblica' | '/kit-biblico'
+  id: '__root__' | '/' | '/biblioteca-biblica' | '/kit-biblico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BibliotecaBiblicaRoute: typeof BibliotecaBiblicaRoute
   KitBiblicoRoute: typeof KitBiblicoRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biblioteca-biblica': {
+      id: '/biblioteca-biblica'
+      path: '/biblioteca-biblica'
+      fullPath: '/biblioteca-biblica'
+      preLoaderRoute: typeof BibliotecaBiblicaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kit-biblico': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BibliotecaBiblicaRoute: BibliotecaBiblicaRoute,
   KitBiblicoRoute: KitBiblicoRoute,
 }
 export const routeTree = rootRouteImport

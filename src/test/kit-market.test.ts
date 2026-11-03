@@ -15,7 +15,7 @@ describe("LATAM purchase flow", () => {
         "?country=CO&lang=es&utm_source=meta&utm_campaign=Familia%20Colombia&fbclid=abc&email=private&redirect=https://evil.example",
       ),
     );
-    expect(url.origin + url.pathname).toBe("https://pay.kiwify.com/n3l7mr7");
+    expect(url.origin + url.pathname).toBe("https://pay.cakto.com.br/3fixz3y_1272141");
     expect(url.searchParams.get("utm_campaign")).toBe("Familia Colombia");
     expect(url.searchParams.get("fbclid")).toBe("abc");
     expect(url.searchParams.has("email")).toBe(false);

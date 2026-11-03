@@ -21,6 +21,8 @@ import {
   type Market,
 } from "@/lib/kit-market";
 
+import { detectCountry } from "@/lib/kit-geo.functions";
+
 const samples = [alphabetSample, prayerSample, loveSample];
 function readSaved(key: string) {
   try {
@@ -41,8 +43,20 @@ function useMarket() {
   const [language, setLanguage] = useState<Language>("es");
   const [rates, setRates] = useState<Record<string, number>>({ USD: 1 });
   const [href, setHref] = useState(CHECKOUT);
+  const manualMarket = useRef(false);
   useEffect(() => {
-    setMarket(resolveMarket(location.search, readSaved("kit-country-v2"), navigator.language));
+    // v3 stores explicit choices only; disregard older automatically selected countries.
+    const savedCountry = readSaved("kit-country-manual-v3");
+    setMarket(resolveMarket(location.search, savedCountry, navigator.language));
+    let countryActive = true;
+    const hasCountryOverride = getMarket(new URLSearchParams(location.search).get("country")) || getMarket(savedCountry);
+    if (!hasCountryOverride) {
+      void detectCountry().then((country) => {
+        if (countryActive && !manualMarket.current) {
+          setMarket(resolveMarket(location.search, null, navigator.language, country));
+        }
+      }).catch(() => { /* Browser locale remains a fallback if detection fails. */ });
+    }
     const lang = new URLSearchParams(location.search).get("lang") || readSaved("kit-language-v2");
     if (lang === "es" || lang === "pt" || lang === "en") setLanguage(lang);
     setHref(checkoutLink(location.search));
@@ -79,6 +93,7 @@ function useMarket() {
     void load();
     return () => {
       active = false;
+      countryActive = false;
       clearTimeout(timeout);
       controller.abort();
     };
@@ -89,8 +104,9 @@ function useMarket() {
   const chooseMarket = (country: string) => {
     const next = getMarket(country);
     if (!next) return;
+    manualMarket.current = true;
     setMarket(next);
-    save("kit-country-v2", country);
+    save("kit-country-manual-v3", country);
     trackKit("kit_market_change", { country, language });
   };
   const chooseLanguage = (lang: Language) => {

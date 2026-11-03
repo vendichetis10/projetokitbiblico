@@ -32,7 +32,7 @@ describe("Localized sales page", () => {
     expect(container.querySelector("h1")).toHaveTextContent("Menos pantallas.");
     const purchase = container.querySelector('a[data-placement="hero"]')!;
     expect(purchase.getAttribute("href")).toContain("utm_source=meta");
-    expect(purchase.getAttribute("href")).toContain("https://pay.kiwify.com/n3l7mr7");
+    expect(purchase.getAttribute("href")).toContain("https://pay.cakto.com.br/3fixz3y_1272141");
     expect(container.textContent).toContain("US$ 7.90");
     await choose("Idioma", "en");
     expect(container.querySelector("h1")).toHaveTextContent("Less screen time.");

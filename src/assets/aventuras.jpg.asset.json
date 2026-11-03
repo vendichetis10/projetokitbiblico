@@ -2,10 +2,9 @@
   "version": 1,
   "asset_id": "5d75d8a8-74b7-4ab5-8951-c35e94794c6d",
   "project_id": "8e2a6b31-2997-48f7-9671-ffe772fc54ef",
-  "url": "/__l5e/assets-v1/5d75d8a8-74b7-4ab5-8951-c35e94794c6d/aventuras.jpg",
-  "r2_key": "a/v1/8e2a6b31-2997-48f7-9671-ffe772fc54ef/5d75d8a8-74b7-4ab5-8951-c35e94794c6d/aventuras.jpg",
-  "original_filename": "aventuras.jpg",
-  "size": 145705,
-  "content_type": "image/jpeg",
+  "url": "/assets/aventuras.webp",
+  "original_filename": "aventuras.webp",
+  "size": 305472,
+  "content_type": "image/webp",
   "created_at": "2026-10-16T01:49:34Z"
 }

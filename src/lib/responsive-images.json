@@ -1,0 +1,184 @@
+{
+  "/assets/kit-biblico-5-bonos.webp": {
+    "width": 1448,
+    "height": 1086,
+    "variants": [
+      {
+        "url": "/assets/kit-biblico-5-bonos-w400.webp",
+        "width": 400
+      },
+      {
+        "url": "/assets/kit-biblico-5-bonos-w720.webp",
+        "width": 720
+      },
+      {
+        "url": "/assets/kit-biblico-5-bonos-w1080.webp",
+        "width": 1080
+      }
+    ]
+  },
+  "/assets/adan-actividad-en-casa.webp": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      {
+        "url": "/assets/adan-actividad-en-casa-w360.webp",
+        "width": 360
+      },
+      {
+        "url": "/assets/adan-actividad-en-casa-w640.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/assets/alfabeto-a.webp": {
+    "width": 850,
+    "height": 1200,
+    "variants": [
+      {
+        "url": "/assets/alfabeto-a-w320.webp",
+        "width": 320
+      }
+    ]
+  },
+  "/assets/orar-sample.webp": {
+    "width": 850,
+    "height": 1200,
+    "variants": [
+      {
+        "url": "/assets/orar-sample-w360.webp",
+        "width": 360
+      },
+      {
+        "url": "/assets/orar-sample-w640.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/assets/amor-sample.webp": {
+    "width": 848,
+    "height": 1200,
+    "variants": [
+      {
+        "url": "/assets/amor-sample-w360.webp",
+        "width": 360
+      },
+      {
+        "url": "/assets/amor-sample-w640.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/assets/alfabeto-cover.webp": {
+    "width": 850,
+    "height": 1200,
+    "variants": [
+      {
+        "url": "/assets/alfabeto-cover-w192.webp",
+        "width": 192
+      },
+      {
+        "url": "/assets/alfabeto-cover-w384.webp",
+        "width": 384
+      }
+    ]
+  },
+  "/assets/orar-cover.webp": {
+    "width": 850,
+    "height": 1200,
+    "variants": [
+      {
+        "url": "/assets/orar-cover-w192.webp",
+        "width": 192
+      },
+      {
+        "url": "/assets/orar-cover-w384.webp",
+        "width": 384
+      }
+    ]
+  },
+  "/assets/amor-cover.webp": {
+    "width": 848,
+    "height": 1200,
+    "variants": [
+      {
+        "url": "/assets/amor-cover-w192.webp",
+        "width": 192
+      },
+      {
+        "url": "/assets/amor-cover-w384.webp",
+        "width": 384
+      }
+    ]
+  },
+  "/assets/bingo.webp": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      {
+        "url": "/assets/bingo-w200.webp",
+        "width": 200
+      },
+      {
+        "url": "/assets/bingo-w400.webp",
+        "width": 400
+      }
+    ]
+  },
+  "/assets/domino.webp": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      {
+        "url": "/assets/domino-w200.webp",
+        "width": 200
+      },
+      {
+        "url": "/assets/domino-w400.webp",
+        "width": 400
+      }
+    ]
+  },
+  "/assets/camino.webp": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      {
+        "url": "/assets/camino-w200.webp",
+        "width": 200
+      },
+      {
+        "url": "/assets/camino-w400.webp",
+        "width": 400
+      }
+    ]
+  },
+  "/assets/mimicas.webp": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      {
+        "url": "/assets/mimicas-w200.webp",
+        "width": 200
+      },
+      {
+        "url": "/assets/mimicas-w400.webp",
+        "width": 400
+      }
+    ]
+  },
+  "/assets/aventuras.webp": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      {
+        "url": "/assets/aventuras-w200.webp",
+        "width": 200
+      },
+      {
+        "url": "/assets/aventuras-w400.webp",
+        "width": 400
+      }
+    ]
+  }
+}

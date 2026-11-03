@@ -2,10 +2,9 @@
   "version": 1,
   "asset_id": "8faa40fa-2d37-488b-a8aa-5415b654c065",
   "project_id": "8e2a6b31-2997-48f7-9671-ffe772fc54ef",
-  "url": "/__l5e/assets-v1/8faa40fa-2d37-488b-a8aa-5415b654c065/domino.jpg",
-  "r2_key": "a/v1/8e2a6b31-2997-48f7-9671-ffe772fc54ef/8faa40fa-2d37-488b-a8aa-5415b654c065/domino.jpg",
-  "original_filename": "domino.jpg",
-  "size": 60266,
-  "content_type": "image/jpeg",
+  "url": "/assets/domino.webp",
+  "original_filename": "domino.webp",
+  "size": 243488,
+  "content_type": "image/webp",
   "created_at": "2026-10-16T01:49:34Z"
 }

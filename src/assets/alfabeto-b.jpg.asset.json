@@ -2,10 +2,9 @@
   "version": 1,
   "asset_id": "a884396d-277d-417a-b108-2e8c73242795",
   "project_id": "8e2a6b31-2997-48f7-9671-ffe772fc54ef",
-  "url": "/__l5e/assets-v1/a884396d-277d-417a-b108-2e8c73242795/alfabeto-b.jpg",
-  "r2_key": "a/v1/8e2a6b31-2997-48f7-9671-ffe772fc54ef/a884396d-277d-417a-b108-2e8c73242795/alfabeto-b.jpg",
-  "original_filename": "alfabeto-b.jpg",
-  "size": 185394,
-  "content_type": "image/jpeg",
+  "url": "/assets/alfabeto-b.webp",
+  "original_filename": "alfabeto-b.webp",
+  "size": 150158,
+  "content_type": "image/webp",
   "created_at": "2026-10-20T04:14:38Z"
 }

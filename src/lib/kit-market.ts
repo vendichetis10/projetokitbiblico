@@ -1,5 +1,5 @@
 export const BASE_PRICE = 7.9;
-export const CHECKOUT = "https://pay.kiwify.com/n3l7mr7";
+export const CHECKOUT = "https://pay.cakto.com.br/3fixz3y_1272141";
 export const markets = [
   ["MX", "México", "MXN", "es-MX"],
   ["CO", "Colombia", "COP", "es-CO"],

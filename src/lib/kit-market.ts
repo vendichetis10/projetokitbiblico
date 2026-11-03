@@ -31,10 +31,11 @@ export function resolveMarket(
   query: string,
   saved?: string | null,
   browserLocale?: string,
+  detectedCountry?: string | null,
 ): Market {
   const params = new URLSearchParams(query);
   const region = browserLocale?.includes("-") ? browserLocale.split("-").at(-1) : undefined;
-  return getMarket(params.get("country")) || getMarket(saved) || getMarket(region) || markets[0];
+  return getMarket(params.get("country")) || getMarket(saved) || getMarket(detectedCountry) || getMarket(region) || markets[0];
 }
 export function formatLocalPrice(rate: number, market: Market) {
   const digits = ["COP", "CLP", "PYG", "CRC", "ARS"].includes(market[2]) ? 0 : 2;

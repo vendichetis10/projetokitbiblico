@@ -16,7 +16,7 @@ export const kitCopy = {
     estimate: "Aproximado en tu moneda",
     base: "Precio base",
     conversion:
-      "El importe, la moneda y los medios de pago disponibles se confirman en Kiwify antes de pagar.",
+      "El importe, la moneda y los medios de pago disponibles se confirman en Cakto antes de pagar.",
     fallback: "Precio en USD. La conversión local se confirma en el checkout.",
     trust: ["Acceso tras confirmar el pago", "Garantía de 7 días", "Imprime solo lo que necesites"],
     included: "8 materiales digitales. No se envían libros físicos.",
@@ -51,7 +51,7 @@ export const kitCopy = {
     ],
     howTitle: "Del correo a la mesa de actividades.",
     steps: [
-      ["Compra una sola vez", "Usa tu correo habitual al pagar en Kiwify."],
+      ["Compra una sola vez", "Usa tu correo habitual al pagar en Cakto."],
       [
         "Descarga tus PDFs",
         "Tras confirmar el pago, abre el correo de acceso. Revisa también Spam o Promociones.",
@@ -65,7 +65,7 @@ export const kitCopy = {
       "La impresión, los colores y otros materiales no están incluidos. Acompaña las actividades según la edad del niño.",
     guaranteeTitle: "Pruébalo con tranquilidad.",
     guarantee:
-      "Tienes 7 días de garantía. Si el material no cumple tus expectativas, solicita el reembolso siguiendo las instrucciones de tu compra en Kiwify.",
+      "Tienes 7 días de garantía. Si el material no cumple tus expectativas, solicita el reembolso siguiendo las instrucciones de tu compra en Cakto.",
     offerKicker: "TU KIT COMPLETO",
     offerTitle: "Una compra. Ocho materiales para volver a compartir.",
     offerIntro: "Descarga tus PDFs y elige la actividad que mejor acompañe a tu familia.",
@@ -82,11 +82,11 @@ export const kitCopy = {
       ],
       [
         "¿Puedo comprar desde México o Colombia?",
-        "Sí, puedes abrir el checkout desde tu país. Kiwify muestra la moneda, el importe y los medios de pago disponibles antes de confirmar. Los valores locales de esta página son aproximados.",
+        "Sí, puedes abrir el checkout desde tu país. Cakto muestra la moneda, el importe y los medios de pago disponibles antes de confirmar. Los valores locales de esta página son aproximados.",
       ],
       [
         "¿Cómo recibo el kit?",
-        "Después de confirmar el pago, Kiwify envía el acceso al correo de la compra. Revisa Spam o Promociones si no lo encuentras; el correo de confirmación también incluye información de soporte.",
+        "Después de confirmar el pago, Cakto envía el acceso al correo de la compra. Revisa Spam o Promociones si no lo encuentras; el correo de confirmación también incluye información de soporte.",
       ],
       [
         "¿En qué idioma está?",
@@ -106,7 +106,7 @@ export const kitCopy = {
       ],
     ],
     footer: "Kit Bíblico Infantil · 3 libros + 5 juegos · Producto digital",
-    checkout: "Compra procesada por Kiwify",
+    checkout: "Compra procesada por Cakto",
     sticky: "Kit completo",
   },
   pt: {
@@ -126,7 +126,7 @@ export const kitCopy = {
     estimate: "Valor aproximado na sua moeda",
     base: "Preço base",
     conversion:
-      "O valor, a moeda e os meios de pagamento disponíveis são confirmados pela Kiwify antes de pagar.",
+      "O valor, a moeda e os meios de pagamento disponíveis são confirmados pela Cakto antes de pagar.",
     fallback: "Preço em USD. A conversão local é confirmada no checkout.",
     trust: [
       "Acesso após a confirmação do pagamento",
@@ -165,7 +165,7 @@ export const kitCopy = {
     ],
     howTitle: "Do e-mail à mesa de atividades.",
     steps: [
-      ["Compre uma só vez", "Use seu e-mail habitual ao pagar na Kiwify."],
+      ["Compre uma só vez", "Use seu e-mail habitual ao pagar na Cakto."],
       [
         "Baixe seus PDFs",
         "Após a confirmação do pagamento, abra o e-mail de acesso. Confira também Spam ou Promoções.",
@@ -179,7 +179,7 @@ export const kitCopy = {
       "Impressão, lápis e outros materiais não estão incluídos. Acompanhe as atividades conforme a idade da criança.",
     guaranteeTitle: "Experimente com tranquilidade.",
     guarantee:
-      "Você tem 7 dias de garantia. Se o material não atender às suas expectativas, solicite o reembolso seguindo as instruções da compra na Kiwify.",
+      "Você tem 7 dias de garantia. Se o material não atender às suas expectativas, solicite o reembolso seguindo as instruções da compra na Cakto.",
     offerKicker: "SEU KIT COMPLETO",
     offerTitle: "Uma compra. Oito materiais para compartilhar de novo.",
     offerIntro: "Baixe seus PDFs e escolha a atividade que mais combina com sua família.",
@@ -196,11 +196,11 @@ export const kitCopy = {
       ],
       [
         "Posso comprar do México ou da Colômbia?",
-        "Sim. Abra o checkout do seu país. A Kiwify mostra o valor, a moeda e os meios de pagamento disponíveis antes da confirmação. Os valores locais desta página são aproximados.",
+        "Sim. Abra o checkout do seu país. A Cakto mostra o valor, a moeda e os meios de pagamento disponíveis antes da confirmação. Os valores locais desta página são aproximados.",
       ],
       [
         "Como recebo o kit?",
-        "Após confirmar o pagamento, a Kiwify envia o acesso ao e-mail da compra. Confira Spam ou Promoções; o e-mail de confirmação também tem informações de suporte.",
+        "Após confirmar o pagamento, a Cakto envia o acesso ao e-mail da compra. Confira Spam ou Promoções; o e-mail de confirmação também tem informações de suporte.",
       ],
       [
         "Qual é o idioma do material?",
@@ -220,7 +220,7 @@ export const kitCopy = {
       ],
     ],
     footer: "Kit Bíblico Infantil · 3 livros + 5 jogos · Produto digital",
-    checkout: "Compra processada pela Kiwify",
+    checkout: "Compra processada pela Cakto",
     sticky: "Kit completo",
   },
   en: {
@@ -240,7 +240,7 @@ export const kitCopy = {
     estimate: "Approximate price in your currency",
     base: "Base price",
     conversion:
-      "Kiwify confirms the final amount, currency and available payment methods before you pay.",
+      "Cakto confirms the final amount, currency and available payment methods before you pay.",
     fallback: "Price in USD. Local conversion is confirmed at checkout.",
     trust: ["Access after payment confirmation", "7-day guarantee", "Print only what you need"],
     included: "8 digital materials. No physical books are shipped.",
@@ -275,7 +275,7 @@ export const kitCopy = {
     ],
     howTitle: "From your inbox to the activity table.",
     steps: [
-      ["Buy once", "Use your regular email address when paying through Kiwify."],
+      ["Buy once", "Use your regular email address when paying through Cakto."],
       [
         "Download your PDFs",
         "After payment confirmation, open your access email. Check Spam or Promotions too.",
@@ -289,7 +289,7 @@ export const kitCopy = {
       "Printing, pencils and other supplies are not included. Guide activities according to your child’s age.",
     guaranteeTitle: "Try it with peace of mind.",
     guarantee:
-      "You have a 7-day guarantee. If the materials do not meet your expectations, request a refund following the instructions in your Kiwify purchase.",
+      "You have a 7-day guarantee. If the materials do not meet your expectations, request a refund following the instructions in your Cakto purchase.",
     offerKicker: "YOUR COMPLETE KIT",
     offerTitle: "One purchase. Eight materials to share again.",
     offerIntro: "Download your PDFs and choose an activity for your family.",
@@ -306,11 +306,11 @@ export const kitCopy = {
       ],
       [
         "Can I buy from Mexico or Colombia?",
-        "Yes. Open checkout from your country. Kiwify shows the amount, currency and available payment methods before confirmation. Local prices on this page are estimates.",
+        "Yes. Open checkout from your country. Cakto shows the amount, currency and available payment methods before confirmation. Local prices on this page are estimates.",
       ],
       [
         "How do I receive it?",
-        "After payment confirmation, Kiwify emails access to the address used for the purchase. Check Spam or Promotions; your confirmation email also contains support information.",
+        "After payment confirmation, Cakto emails access to the address used for the purchase. Check Spam or Promotions; your confirmation email also contains support information.",
       ],
       [
         "What language are the materials in?",
@@ -330,7 +330,7 @@ export const kitCopy = {
       ],
     ],
     footer: "Kit Bíblico Infantil · 3 books + 5 games · Digital product",
-    checkout: "Purchase processed by Kiwify",
+    checkout: "Purchase processed by Cakto",
     sticky: "Complete kit",
   },
 };
@@ -372,7 +372,7 @@ export const structureCopy = {
     ],
     guaranteeFaq: [
       "¿Cómo funciona la garantía?",
-      "Tienes 7 días de garantía. Solicita el reembolso siguiendo las instrucciones del correo de tu compra en Kiwify.",
+      "Tienes 7 días de garantía. Solicita el reembolso siguiendo las instrucciones del correo de tu compra en Cakto.",
     ],
   },
   pt: {
@@ -404,7 +404,7 @@ export const structureCopy = {
     ],
     guaranteeFaq: [
       "Como funciona a garantia?",
-      "Você tem 7 dias de garantia. Solicite o reembolso seguindo as instruções do e-mail da sua compra na Kiwify.",
+      "Você tem 7 dias de garantia. Solicite o reembolso seguindo as instruções do e-mail da sua compra na Cakto.",
     ],
   },
   en: {
@@ -438,7 +438,7 @@ export const structureCopy = {
     ],
     guaranteeFaq: [
       "How does the guarantee work?",
-      "You have a 7-day guarantee. Request a refund by following the instructions in your Kiwify purchase email.",
+      "You have a 7-day guarantee. Request a refund by following the instructions in your Cakto purchase email.",
     ],
   },
 };

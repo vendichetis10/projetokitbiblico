@@ -2,6 +2,7 @@ import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { KitPage } from "@/components/kit-page";
+vi.mock("@/lib/kit-geo.functions", () => ({ detectCountry: vi.fn().mockResolvedValue("MX") }));
 let root: Root | undefined;
 let container: HTMLDivElement;
 afterEach(async () => {
@@ -39,6 +40,19 @@ describe("Localized sales page", () => {
     expect(container.textContent).toContain("Made for everyday family time.");
     expect(container.querySelector('select[aria-label="Country / currency"]')).toHaveValue("CO");
     expect(document.documentElement.lang).toBe("en");
+  });
+  it("uses Mexico from IP even with Portuguese browser and an old Brazil preference", async () => {
+    window.history.replaceState(null, "", "/kit-biblico");
+    sessionStorage.setItem("kit-country-v2", "BR");
+    vi.stubGlobal("navigator", { language: "pt-BR" });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true, json: async () => ({ result: "success", rates: { USD: 1, MXN: 20, BRL: 5 } }),
+    }));
+    await mount();
+    expect(container.querySelector('select[aria-label="País / moneda"]')).toHaveValue("MX");
+    expect(container.textContent).toContain("MXN 158.00");
+    await choose("País / moneda", "CO");
+    expect(sessionStorage.getItem("kit-country-manual-v3")).toBe("CO");
   });
   it("updates all purchase prices for Mexico and Colombia", async () => {
     window.history.replaceState(null, "", "/kit-biblico?country=MX");

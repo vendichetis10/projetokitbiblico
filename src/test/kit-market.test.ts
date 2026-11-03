@@ -22,6 +22,13 @@ describe("LATAM purchase flow", () => {
     expect(url.searchParams.has("redirect")).toBe(false);
     expect(url.searchParams.has("country")).toBe(false);
   });
+  it("prefers detected IP country over browser language while keeping explicit choices", () => {
+    expect(resolveMarket("", null, "pt-BR", "MX")[0]).toBe("MX");
+    expect(resolveMarket("", null, "pt-BR", "CO")[0]).toBe("CO");
+    expect(resolveMarket("?country=BR", null, "pt-BR", "MX")[0]).toBe("BR");
+    expect(resolveMarket("", "CO", "pt-BR", "MX")[0]).toBe("CO");
+    expect(resolveMarket("", null, "pt-BR", null)[0]).toBe("BR");
+  });
   it("uses explicit currency codes and local precision", () => {
     expect(formatLocalPrice(20, markets[0])).toBe("MXN 158.00");
     expect(formatLocalPrice(4000, markets[1])).toBe("COP 31.600");
